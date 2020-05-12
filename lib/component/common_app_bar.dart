@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:projectbudy/util/colors.dart';
 
 class CommonAppBar extends AppBar {
   CommonAppBar()
       : super(
           centerTitle: true,
-          title: Text("Alarms"),
-          iconTheme: IconThemeData(color: Colors.indigo[500]),
+          title: const Text("Alarms"), // TODO translation
+          iconTheme: IconThemeData(color: CommonColors.accentColor),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.add),
