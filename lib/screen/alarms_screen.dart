@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectbudy/components/common_bottom_navigaton_bar.dart';
 
 class AlarmsScreen extends StatelessWidget {
   @override
@@ -15,20 +16,7 @@ class AlarmsScreen extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          title: Text('Home'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          title: Text('Business'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.school),
-          title: Text('School'),
-        ),
-      ]),
+      bottomNavigationBar: CommonBottomNavigationBar(),
       body: Center(
           child: Column(
         children: [
