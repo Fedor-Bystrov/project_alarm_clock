@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
-const padding = 16.0;
+import 'package:projectbudy/util/colors.dart';
 
 class AlarmTile extends StatelessWidget {
-  final Text _value;
-  final Text _description;
+  final String _value;
+  final String _description;
   final bool _enabled;
 
   AlarmTile(this._value, this._description, this._enabled);
@@ -15,18 +14,18 @@ class AlarmTile extends StatelessWidget {
     return Column(
       children: <Widget>[
         ListTile(
-          title: _value,
-          subtitle: _description,
+          dense: false,
+          title: Text(
+            _value,
+            style: const TextStyle(fontSize: 24.0),
+          ),
+          subtitle: Text(_description),
           enabled: _enabled,
           trailing: Switch(
             onChanged: (p) => {},
             value: _enabled,
+            activeColor: CommonColors.accentColor,
           ),
-          contentPadding: const EdgeInsets.fromLTRB(padding, 0, padding, 0),
-        ),
-        Divider(
-          indent: padding,
-          endIndent: padding,
         )
       ],
     );

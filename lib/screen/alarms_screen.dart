@@ -10,12 +10,15 @@ class AlarmsScreen extends StatelessWidget {
       appBar: CommonAppBar(),
       bottomNavigationBar: CommonBottomNavigationBar(),
       body: ListView(
-        children: <Widget>[
-          AlarmTile(Text("8:29 am"), Text("Don’t Sleep, Mon Wed Fri"), true),
-          AlarmTile(Text("10:00 am"), Text("Alarm, Every Day"), false),
-          AlarmTile(Text("1:00 pm"), Text("Alarm"), true),
-          AlarmTile(Text("6:20 pm"), Text("Alarm, Every Weekday"), false),
-        ],
+        children: ListTile.divideTiles(
+          context: context,
+          tiles: [
+            AlarmTile("8:29 am", "Don’t Sleep, Mon Wed Fri", true),
+            AlarmTile("10:00 am", "Alarm, Every Day", false),
+            AlarmTile("1:00 pm", "Alarm", true),
+            AlarmTile("6:20 pm", "Alarm, Every Weekday", false),
+          ],
+        ).toList(),
       ),
     );
   }
