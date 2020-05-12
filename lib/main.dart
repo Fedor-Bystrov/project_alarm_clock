@@ -7,9 +7,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Budy',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.grey[300],
       ),
       home: AlarmsScreen(),
     );

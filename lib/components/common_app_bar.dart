@@ -5,6 +5,7 @@ class CommonAppBar extends AppBar {
       : super(
           centerTitle: true,
           title: Text("Alarms"),
+          iconTheme: IconThemeData(color: Colors.indigo[500]),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.add),
