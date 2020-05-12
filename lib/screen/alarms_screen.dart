@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projectbudy/components/common_bottom_nav_bar.dart';
-import 'package:projectbudy/components/common_app_bar.dart';
+import 'package:projectbudy/component/alarm_tile.dart';
+import 'package:projectbudy/component/common_bottom_nav_bar.dart';
+import 'package:projectbudy/component/common_app_bar.dart';
 
 class AlarmsScreen extends StatelessWidget {
   @override
@@ -8,12 +9,13 @@ class AlarmsScreen extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppBar(),
       bottomNavigationBar: CommonBottomNavigationBar(),
-      body: Center(
-          child: Column(
-        children: [
-          Text("body"),
+      body: ListView(
+        children: <Widget>[
+          AlarmTile(),
+          AlarmTile(),
+          AlarmTile(),
         ],
-      )),
+      ),
     );
   }
 }
