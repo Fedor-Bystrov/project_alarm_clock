@@ -6,7 +6,7 @@ class CommonBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
         selectedItemColor: CommonColors.accentColor,
-        unselectedItemColor: CommonColors.accentColor,
+        unselectedItemColor: CommonColors.blackInactive,
         backgroundColor: CommonColors.primaryColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
