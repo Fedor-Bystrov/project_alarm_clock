@@ -4,16 +4,23 @@ import 'package:flutter/cupertino.dart';
 const padding = 16.0;
 
 class AlarmTile extends StatelessWidget {
+  final Text _value;
+  final Text _description;
+  final bool _enabled;
+
+  AlarmTile(this._value, this._description, this._enabled);
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         ListTile(
-          title: Text('8:29 am'),
-          subtitle: Text('Don’t Sleep, Mon Wed Fri'),
+          title: _value,
+          subtitle: _description,
+          enabled: _enabled,
           trailing: Switch(
             onChanged: (p) => {},
-            value: true,
+            value: _enabled,
           ),
           contentPadding: const EdgeInsets.fromLTRB(padding, 0, padding, 0),
         ),
