@@ -4,6 +4,8 @@ import 'package:projectbudy/component/common_bottom_nav_bar.dart';
 import 'package:projectbudy/component/common_app_bar.dart';
 
 class AlarmsScreen extends StatelessWidget {
+  static const String id = 'alarms';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
