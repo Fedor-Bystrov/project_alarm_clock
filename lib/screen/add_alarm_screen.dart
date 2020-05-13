@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projectbudy/component/common_bottom_nav_bar.dart';
 import 'package:projectbudy/util/colors.dart';
@@ -16,13 +17,17 @@ class AddAlarmScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.check),
             tooltip: "Save alarm", // TODO translations
-            onPressed: () {
-            },
+            onPressed: () {},
           )
         ],
       ),
       bottomNavigationBar: CommonBottomNavigationBar(),
-      body: Text('add alarm'),
+      body: CupertinoDatePicker(
+        mode: CupertinoDatePickerMode.time,
+        onDateTimeChanged: (DateTime value) {
+          print(value);
+        },
+      ),
     );
   }
 }
