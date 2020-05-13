@@ -3,9 +3,17 @@ import 'package:projectbudy/component/alarm_tile.dart';
 import 'package:projectbudy/component/common_bottom_nav_bar.dart';
 import 'package:projectbudy/util/colors.dart';
 import 'package:projectbudy/screen/add_alarm_screen.dart';
+import 'package:projectbudy/model/alarm.dart';
 
 class AlarmsScreen extends StatelessWidget {
   static const String id = 'alarms';
+
+  static List<Alarm> alarms = [
+    Alarm("8:29 am", "Mon Wed Fri", "Don’t Sleep", true),
+    Alarm("10:00 am", "Every Day", "Alarm", false),
+    Alarm("1:00 pm", null, "Alarm", true),
+    Alarm("6:20 pm", "Every Day", "Alarm", false),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +36,7 @@ class AlarmsScreen extends StatelessWidget {
       body: ListView(
         children: ListTile.divideTiles(
           context: context,
-          tiles: [
-            AlarmTile("8:29 am", "Don’t Sleep, Mon Wed Fri", true),
-            AlarmTile("10:00 am", "Alarm, Every Day", false),
-            AlarmTile("1:00 pm", "Alarm", true),
-            AlarmTile("6:20 pm", "Alarm, Every Weekday", false),
-          ],
+          tiles: alarms.map((alarm) => AlarmTile(alarm)),
         ).toList(),
       ),
     );

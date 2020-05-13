@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:projectbudy/util/colors.dart';
+import 'package:projectbudy/model/alarm.dart';
 
 class AlarmTile extends StatelessWidget {
-  final String _value;
-  final String _description;
-  final bool _enabled;
+  final Alarm _alarm;
 
-  AlarmTile(this._value, this._description, this._enabled);
+  AlarmTile(this._alarm);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       dense: false,
       title: Text(
-        _value,
+        _alarm.time,
         style: const TextStyle(fontSize: 24.0),
       ),
-      subtitle: Text(_description),
-      enabled: _enabled,
+      subtitle: Text("${_alarm.label}${_alarm.repeat == null ? '' : ', ${_alarm.repeat}'} "),
+      enabled: _alarm.enabled,
       trailing: Switch(
         onChanged: (p) => {},
-        value: _enabled,
+        value: _alarm.enabled,
         activeColor: CommonColors.accentColor,
       ),
     );
