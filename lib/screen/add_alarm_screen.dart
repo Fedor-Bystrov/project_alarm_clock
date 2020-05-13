@@ -13,9 +13,11 @@ class AddAlarmScreen extends StatelessWidget {
         title: const Text("Add Alarm"), // TODO translation
         iconTheme: IconThemeData(color: CommonColors.accentColor),
         actions: <Widget>[
-          FlatButton(
-            child: const Text('save'), // TODO translation
-            onPressed: () => print("save alarm pressed"),
+          IconButton(
+            icon: const Icon(Icons.check),
+            tooltip: "Save alarm", // TODO translations
+            onPressed: () {
+            },
           )
         ],
       ),
