@@ -11,23 +11,19 @@ class AlarmTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ListTile(
-          dense: false,
-          title: Text(
-            _value,
-            style: const TextStyle(fontSize: 24.0),
-          ),
-          subtitle: Text(_description),
-          enabled: _enabled,
-          trailing: Switch(
-            onChanged: (p) => {},
-            value: _enabled,
-            activeColor: CommonColors.accentColor,
-          ),
-        )
-      ],
+    return ListTile(
+      dense: false,
+      title: Text(
+        _value,
+        style: const TextStyle(fontSize: 24.0),
+      ),
+      subtitle: Text(_description),
+      enabled: _enabled,
+      trailing: Switch(
+        onChanged: (p) => {},
+        value: _enabled,
+        activeColor: CommonColors.accentColor,
+      ),
     );
   }
 }
