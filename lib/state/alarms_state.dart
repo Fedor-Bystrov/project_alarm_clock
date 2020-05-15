@@ -14,6 +14,10 @@ class AlarmsState extends ChangeNotifier {
     return UnmodifiableListView(_alarms);
   }
 
+  int get alarmsCount {
+    return _alarms.length;
+  }
+
   void addAlarm(Alarm alarm) {
     _alarms.add(alarm);
     notifyListeners();
