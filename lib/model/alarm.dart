@@ -1,9 +1,9 @@
 
 class Alarm {
-  final String time;
-  final repeat;
-  final label;
-  final enabled;
+  String time;
+  String repeat;
+  String label;
+  bool enabled;
 
-  const Alarm(this.time, this.repeat, this.label, this.enabled);
+  Alarm(this.time, this.repeat, this.label, this.enabled);
 }
