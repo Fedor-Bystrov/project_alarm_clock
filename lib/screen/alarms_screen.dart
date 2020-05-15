@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:projectbudy/widget/alarm_tile.dart';
 import 'package:projectbudy/widget//common_bottom_nav_bar.dart';
 import 'package:projectbudy/util/colors.dart';
 import 'package:projectbudy/screen/add_alarm_screen.dart';
-import 'package:projectbudy/state/alarms_state.dart';
-
+import 'package:projectbudy/widget/alarms_list.dart';
 class AlarmsScreen extends StatelessWidget {
   static const String id = 'alarms';
 
@@ -28,16 +25,7 @@ class AlarmsScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: CommonBottomNavigationBar(),
-      body: Consumer<AlarmsState>(
-        builder: (BuildContext context, AlarmsState state, Widget child) {
-          return ListView(
-            children: ListTile.divideTiles(
-              context: context,
-              tiles: state.alarms.map((alarm) => AlarmTile(alarm)),
-            ).toList(),
-          );
-        },
-      ),
+      body: AlarmsList(),
     );
   }
 }
