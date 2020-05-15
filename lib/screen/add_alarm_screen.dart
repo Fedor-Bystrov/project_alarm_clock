@@ -6,6 +6,8 @@ import 'package:projectbudy/util/colors.dart';
 class AddAlarmScreen extends StatelessWidget {
   static const String id = 'add_alarm';
 
+  // TODO add dynamic alarm creation
+
   @override
   Widget build(BuildContext context) {
     var tiles = ListTile.divideTiles(
