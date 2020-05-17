@@ -7,6 +7,7 @@ import 'package:projectbudy/widget/common_bottom_nav_bar.dart';
 import 'package:projectbudy/util/colors.dart';
 import 'package:projectbudy/state/alarms_state.dart';
 import 'package:projectbudy/model/alarm.dart';
+import 'package:projectbudy/util/utils.dart';
 
 class AddAlarmScreen extends StatelessWidget {
   static const String id = 'add_alarm';
@@ -50,21 +51,16 @@ class AddAlarmScreen extends StatelessWidget {
   Future<void> addAlarm(BuildContext context, Alarm alarm) async {
     Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
     AndroidAlarmManager.oneShotAt(
-      alarm.time,
-      1, // TODO Track alarm Ids
-      callback,
-      exact: true,
-      wakeup: true,
-      rescheduleOnReboot: true
-    );
+        alarm.time,
+        1, // TODO Track alarm Ids
+        callback,
+        exact: true,
+        wakeup: true,
+        rescheduleOnReboot: true);
   }
 
   static void callback(int id) {
     print("Alarm $id fired");
-  }
-
-  bool is24hFormat(BuildContext context) {
-    return MediaQuery.of(context).alwaysUse24HourFormat;
   }
 
   Iterable<Widget> getAlarmModifiers(BuildContext context) {
