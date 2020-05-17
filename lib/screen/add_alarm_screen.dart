@@ -50,7 +50,7 @@ class AddAlarmScreen extends StatelessWidget {
       ],
     );
 
-    Alarm alarm = Alarm(null, null, "Alarm", false);
+    Alarm alarm = Alarm(DateTime.now(), null, "Alarm", true);
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +62,8 @@ class AddAlarmScreen extends StatelessWidget {
             icon: const Icon(Icons.check),
             tooltip: "Save alarm", // TODO translations
             onPressed: () {
-              Provider.of<AlarmsState>(context).addAlarm(alarm);
+              Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
+              Navigator.pop(context);
             },
           )
         ],

@@ -12,8 +12,8 @@ class AlarmTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => _alarm,
+    return ChangeNotifierProvider.value(
+      value: _alarm,
       child: Consumer<Alarm>(
         builder: (BuildContext context, Alarm value, Widget child) {
           return ListTile(
