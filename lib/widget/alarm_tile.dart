@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import 'package:projectbudy/util/colors.dart';
 import 'package:projectbudy/model/alarm.dart';
@@ -19,7 +20,7 @@ class AlarmTile extends StatelessWidget {
           return ListTile(
             dense: false,
             title: Text(
-              _alarm.time.toIso8601String(),
+              getDateFormat(context).format(_alarm.time),
               style: const TextStyle(fontSize: 24.0),
             ),
             subtitle: Text("${_alarm.label}${_alarm.repeat == null ? '' : ', ${_alarm.repeat}'} "),
@@ -33,5 +34,11 @@ class AlarmTile extends StatelessWidget {
         },
       ),
     );
+  }
+
+  static DateFormat getDateFormat(BuildContext context) {
+    return MediaQuery
+      .of(context)
+      .alwaysUse24HourFormat ? DateFormat.Hm() : DateFormat.jm();
   }
 }

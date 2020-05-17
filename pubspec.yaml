@@ -11,6 +11,7 @@ dependencies:
 
   cupertino_icons: ^0.1.2
   provider: ^4.1.2
+  intl: ^0.16.1  # internationalization, date formatting
   # https://pub.dev/packages/android_alarm_manager
   # android_alarm_manager: ">=0.4.0+0 <2.0.0"
 
