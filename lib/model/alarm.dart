@@ -16,6 +16,8 @@ class Alarm extends ChangeNotifier {
 
   DateTime get time => _time;
 
+  // TODO how to persist changes in alarm?
+
   set enabled(bool value) {
     _enabled = value;
     notifyListeners();

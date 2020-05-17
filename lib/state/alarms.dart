@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:projectbudy/model/alarm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AlarmsState extends ChangeNotifier {
+class AlarmsState extends ChangeNotifier { // TODO unit test
   static const String alarmsKey = 'alarmsState';
 
   final SharedPreferences sharedPreferences;
   List<Alarm> _alarms;
 
-  AlarmsState(this.sharedPreferences) {
+  AlarmsState(this.sharedPreferences) { // TODO unit test
 //    initTestAlarms();
     _alarms = sharedPreferences
         .getStringList(alarmsKey)
@@ -29,8 +29,9 @@ class AlarmsState extends ChangeNotifier {
     return _alarms.length;
   }
 
-  void addAlarm(Alarm alarm) {
+  void addAlarm(Alarm alarm) { // TODO unit test
     _alarms.add(alarm);
+    persistAlarms();
     notifyListeners();
   }
 
@@ -41,6 +42,10 @@ class AlarmsState extends ChangeNotifier {
       Alarm(DateTime.parse("2012-02-27 13:00:00"), null, "Alarm", true),
       Alarm(DateTime.parse("2012-02-27 18:20:00"), "Every Day", "Alarm", false),
     ];
+    sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
+  }
+
+  void persistAlarms() {
     sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
   }
 }
