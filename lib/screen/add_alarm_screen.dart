@@ -1,3 +1,4 @@
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +23,8 @@ class AddAlarmScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.check),
             tooltip: "Save alarm", // TODO translations
-            onPressed: () {
-              Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
+            onPressed: () async {
+              await addAlarm(context, alarm);
               Navigator.pop(context);
             },
           )
@@ -44,6 +45,22 @@ class AddAlarmScreen extends StatelessWidget {
         ),
       ]..addAll(getAlarmModifiers(context))),
     );
+  }
+
+  Future<void> addAlarm(BuildContext context, Alarm alarm) async {
+    Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
+    AndroidAlarmManager.oneShotAt(
+      alarm.time,
+      1, // TODO Track alarm Ids
+      callback,
+      exact: true,
+      wakeup: true,
+      rescheduleOnReboot: true
+    );
+  }
+
+  static void callback(int id) {
+    print("Alarm $id fired");
   }
 
   bool is24hFormat(BuildContext context) {
