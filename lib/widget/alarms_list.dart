@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/widget/alarm_tile.dart';
-import 'package:projectbudy/state/alarms_state.dart';
+import 'package:projectbudy/state/alarms.dart';
 
 class AlarmsList extends StatelessWidget {
   @override

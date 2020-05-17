@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:projectbudy/screen/alarms_screen.dart';
-import 'package:projectbudy/screen/add_alarm_screen.dart';
-import 'package:projectbudy/state/alarms_state.dart';
+import 'package:projectbudy/screen/alarms.dart';
+import 'package:projectbudy/screen/add_alarm.dart';
+import 'package:projectbudy/state/alarms.dart';
 import 'package:projectbudy/util/colors.dart';
 
 

@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:projectbudy/widget/common_bottom_nav_bar.dart';
+import 'package:projectbudy/widget/navbar/bottom.dart';
+import 'package:projectbudy/widget/appbar/add_alarm.dart';
 import 'package:projectbudy/util/colors.dart';
-import 'package:projectbudy/state/alarms_state.dart';
+import 'package:projectbudy/state/alarms.dart';
 import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/util/utils.dart';
 
@@ -16,20 +17,12 @@ class AddAlarmScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var alarm = Alarm(DateTime.now(), null, "Alarm", true);
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Add Alarm"), // TODO translation
-        iconTheme: IconThemeData(color: CommonColors.accentColor),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.check),
-            tooltip: "Save alarm", // TODO translations
-            onPressed: () async {
-              await addAlarm(context, alarm);
-              Navigator.pop(context);
-            },
-          )
-        ],
+      appBar: AddAlarmAppBar(
+        context: context,
+        onPressed: () async {
+          await addAlarm(context, alarm);
+          Navigator.pop(context);
+        },
       ),
       bottomNavigationBar: CommonBottomNavigationBar(),
       body: ListView(
