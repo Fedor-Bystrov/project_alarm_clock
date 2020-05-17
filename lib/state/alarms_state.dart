@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projectbudy/model/alarm.dart';
 import 'dart:collection';
+
+import 'package:projectbudy/model/alarm.dart';
 
 class AlarmsState extends ChangeNotifier {
   List<Alarm> _alarms = [
