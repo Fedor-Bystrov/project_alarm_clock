@@ -13,11 +13,12 @@ class AlarmsState extends ChangeNotifier {
   List<Alarm> _alarms;
 
   AlarmsState(this.sharedPreferences) {
-//    _alarms = List<Alarm>.from(json.decode(sharedPreferences.getString(alarmsKey)))
-//        .map((a) => Alarm.fromJson(a))
-//        .toList();
-    initTestAlarms();
-//    print(sharedPreferences.getStringList(alarmsKey));
+//    initTestAlarms();
+    _alarms = sharedPreferences
+        .getStringList(alarmsKey)
+        .map((a) => json.decode(a))
+        .map((a) => Alarm.fromJson(a))
+        .toList();
   }
 
   UnmodifiableListView<Alarm> get alarms {
@@ -40,9 +41,6 @@ class AlarmsState extends ChangeNotifier {
       Alarm(DateTime.parse("2012-02-27 13:00:00"), null, "Alarm", true),
       Alarm(DateTime.parse("2012-02-27 18:20:00"), "Every Day", "Alarm", false),
     ];
-    _alarms = alarms;
-
     sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
-    print("ok");
   }
 }

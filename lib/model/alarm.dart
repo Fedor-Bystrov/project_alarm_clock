@@ -45,7 +45,7 @@ class Alarm extends ChangeNotifier {
   Map<String, dynamic> toJson() => {
         'time': _time.toIso8601String(),
         'repeat': _repeat,
-        '_label': _label,
+        'label': _label,
         'enabled': _enabled,
       };
 }

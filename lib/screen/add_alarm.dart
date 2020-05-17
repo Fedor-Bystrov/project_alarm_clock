@@ -33,8 +33,6 @@ class AddAlarmScreen extends StatelessWidget {
 
   // TODO
   //  1. extract to Service
-  //  2. Store alarms to SharedSettings (JSON?)
-  //  3. Read alarms from Shared Settings
 
   Future<void> addAlarm(BuildContext context, Alarm alarm) async {
     Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
