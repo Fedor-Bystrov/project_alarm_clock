@@ -12,7 +12,48 @@ class AddAlarmScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var tiles = ListTile.divideTiles(
+    var alarm = Alarm(DateTime.now(), null, "Alarm", true);
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Add Alarm"), // TODO translation
+        iconTheme: IconThemeData(color: CommonColors.accentColor),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.check),
+            tooltip: "Save alarm", // TODO translations
+            onPressed: () {
+              Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+      bottomNavigationBar: CommonBottomNavigationBar(),
+      body: ListView(
+          children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height / 4,
+          child: Container(
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.time,
+              use24hFormat: is24hFormat(context),
+              onDateTimeChanged: (DateTime value) {
+                alarm.time = value;
+              },
+            ),
+          ),
+        ),
+      ]..addAll(getAlarmModifiers(context))),
+    );
+  }
+
+  bool is24hFormat(BuildContext context) {
+    return MediaQuery.of(context).alwaysUse24HourFormat;
+  }
+
+  Iterable<Widget> getAlarmModifiers(BuildContext context) {
+    return ListTile.divideTiles(
       context: context,
       tiles: [
         ListTile(
@@ -48,41 +89,6 @@ class AddAlarmScreen extends StatelessWidget {
           ),
         )
       ],
-    );
-
-    Alarm alarm = Alarm(DateTime.now(), null, "Alarm", true);
-
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Add Alarm"), // TODO translation
-        iconTheme: IconThemeData(color: CommonColors.accentColor),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.check),
-            tooltip: "Save alarm", // TODO translations
-            onPressed: () {
-              Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
-              Navigator.pop(context);
-            },
-          )
-        ],
-      ),
-      bottomNavigationBar: CommonBottomNavigationBar(),
-      body: ListView(
-          children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height / 4,
-          child: Container(
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.time,
-              onDateTimeChanged: (DateTime value) {
-                alarm.time = value;
-              },
-            ),
-          ),
-        ),
-      ]..addAll(tiles)),
     );
   }
 }
