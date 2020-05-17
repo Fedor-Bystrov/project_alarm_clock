@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:projectbudy/util/colors.dart';
 
-class CommonBottomNavigationBar extends StatelessWidget {
+class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(

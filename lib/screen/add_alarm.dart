@@ -24,7 +24,7 @@ class AddAlarmScreen extends StatelessWidget {
           Navigator.pop(context);
         },
       ),
-      bottomNavigationBar: CommonBottomNavigationBar(),
+      bottomNavigationBar: BottomNavBar(),
       body: ListView(
           children: <Widget>[
         Container(

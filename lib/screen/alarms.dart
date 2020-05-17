@@ -25,7 +25,7 @@ class AlarmsScreen extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: CommonBottomNavigationBar(),
+      bottomNavigationBar: BottomNavBar(),
       body: AlarmsList(),
     );
   }
