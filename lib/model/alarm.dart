@@ -37,13 +37,13 @@ class Alarm extends ChangeNotifier {
   }
 
   Alarm.fromJson(Map<String, dynamic> json)
-    : _time = json['time'],
+    : _time = DateTime.parse(json['time']),
       _repeat = json['repeat'],
       _label = json['label'],
       _enabled = json['enabled'];
 
   Map<String, dynamic> toJson() => {
-        'time': _time,
+        'time': _time.toIso8601String(),
         'repeat': _repeat,
         '_label': _label,
         'enabled': _enabled,

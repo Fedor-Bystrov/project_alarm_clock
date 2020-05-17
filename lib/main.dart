@@ -2,6 +2,7 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:android_alarm_manager/android_alarm_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 import 'package:projectbudy/application.dart';
@@ -21,5 +22,6 @@ main() async {
     throw 'Alarm Manager Not Initialized!'; // TODO error handling, logging
   }
   IsolateNameServer.registerPortWithName(receivePort.sendPort, isolateName);
-  runApp(Application());
+  var sharedPreferences = await SharedPreferences.getInstance();
+  runApp(Application(sharedPreferences));
 }
