@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Alarm extends ChangeNotifier {
-  String _time;
+  DateTime _time;
   String _repeat;
   String _label;
   bool _enabled;
@@ -14,7 +14,7 @@ class Alarm extends ChangeNotifier {
 
   String get repeat => _repeat;
 
-  String get time => _time;
+  DateTime get time => _time;
 
   set enabled(bool value) {
     _enabled = value;
@@ -31,7 +31,7 @@ class Alarm extends ChangeNotifier {
     notifyListeners();
   }
 
-  set time(String value) {
+  set time(DateTime value) {
     _time = value;
     notifyListeners();
   }

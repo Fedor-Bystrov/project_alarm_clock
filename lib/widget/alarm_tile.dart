@@ -19,7 +19,7 @@ class AlarmTile extends StatelessWidget {
           return ListTile(
             dense: false,
             title: Text(
-              _alarm.time,
+              _alarm.time.toIso8601String(),
               style: const TextStyle(fontSize: 24.0),
             ),
             subtitle: Text("${_alarm.label}${_alarm.repeat == null ? '' : ', ${_alarm.repeat}'} "),
