@@ -34,14 +34,12 @@ class AddAlarmScreen extends StatelessWidget {
           children: <Widget>[
         Container(
           height: MediaQuery.of(context).size.height / 4,
-          child: Container(
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.time,
-              use24hFormat: is24hFormat(context),
-              onDateTimeChanged: (DateTime value) {
-                alarm.time = value;
-              },
-            ),
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.time,
+            use24hFormat: is24hFormat(context),
+            onDateTimeChanged: (DateTime value) {
+              alarm.time = value;
+            },
           ),
         ),
       ]..addAll(getAlarmModifiers(context))),
