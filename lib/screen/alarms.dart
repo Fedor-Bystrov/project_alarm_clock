@@ -3,7 +3,7 @@ import 'package:projectbudy/widget/appbar/alarms.dart';
 
 import 'package:projectbudy/widget/navbar/bottom.dart';
 import 'package:projectbudy/screen/add_alarm.dart';
-import 'package:projectbudy/widget/alarms_list.dart';
+import 'package:projectbudy/widget/body/alarms_list.dart';
 
 class AlarmsScreen extends StatelessWidget {
   static const String id = 'alarms';
