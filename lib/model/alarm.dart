@@ -20,4 +20,9 @@ class Alarm {
         'label': label,
         'enabled': enabled,
       };
+
+  @override
+  String toString() {
+    return '{time: $time, repeat: $repeat, label: $label, enabled: $enabled}';
+  }
 }
