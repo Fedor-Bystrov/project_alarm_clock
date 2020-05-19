@@ -31,14 +31,21 @@ class AlarmsState extends ChangeNotifier { // TODO unit test
 
   void addAlarm(Alarm alarm) { // TODO unit test
     _alarms.add(alarm);
-    persistAlarms();
-    notifyListeners();
+    persistAndNotify();
   }
 
   void switchAlarm(int alarmIndex, bool value) { // TODO unit test
     _alarms[alarmIndex].enabled = value;
+    persistAndNotify();
+  }
+
+  void persistAndNotify() {
     persistAlarms();
     notifyListeners();
+  }
+
+  void persistAlarms() {
+    sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
   }
 
   void initTestAlarms() {
@@ -48,10 +55,6 @@ class AlarmsState extends ChangeNotifier { // TODO unit test
       Alarm(DateTime.parse("2012-02-27 13:00:00"), null, "Alarm", true),
       Alarm(DateTime.parse("2012-02-27 18:20:00"), "Every Day", "Alarm", false),
     ];
-    sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
-  }
-
-  void persistAlarms() {
     sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
   }
 }
