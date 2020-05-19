@@ -7,9 +7,10 @@ import 'package:projectbudy/util/colors.dart';
 import 'package:projectbudy/util/utils.dart';
 
 class AlarmTile extends StatelessWidget {
+  final int _alarmIndex;
   final Alarm _alarm;
 
-  AlarmTile(this._alarm);
+  AlarmTile(this._alarmIndex, this._alarm);
 
   @override
   Widget build(BuildContext context) {
