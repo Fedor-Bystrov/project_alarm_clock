@@ -38,6 +38,11 @@ class AlarmsState extends ChangeNotifier {
     persistAndNotify();
   }
 
+  void deleteAlarm(int alarmIndex) {
+    _alarms.removeAt(alarmIndex);
+    persistAndNotify();
+  }
+
   void switchAlarm(int alarmIndex, bool value) {
     _alarms[alarmIndex].enabled = value;
     persistAndNotify();

@@ -80,5 +80,51 @@ void main() async {
       final updatedState = AlarmsState(sharedPreferences);
       expect(updatedState.alarms, equals(expectedAlarms));
     });
+
+    test('AlarmsState#deleteAlarm deletes and persists alarms', () async {
+      SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
+
+      final sharedPreferences = await SharedPreferences.getInstance();
+      var state = AlarmsState(sharedPreferences);
+      final expectedAlarms = parseAlarms(alarmsJson);
+
+      expect(state.alarms, equals(expectedAlarms));
+
+      // delete last alarm
+      state.deleteAlarm(state.alarmsCount - 1);
+
+      expect(state.alarmsCount, equals(2));
+      expect(state.alarms[0], equals(expectedAlarms[0]));
+      expect(state.alarms[1], equals(expectedAlarms[1]));
+
+      // reloading alarms from sharedPreferences
+      state = AlarmsState(sharedPreferences);
+
+      expect(state.alarmsCount, equals(2));
+      expect(state.alarms[0], equals(expectedAlarms[0]));
+      expect(state.alarms[1], equals(expectedAlarms[1]));
+
+      // delete one more alarm
+      state.deleteAlarm(state.alarmsCount - 1);
+
+      expect(state.alarmsCount, equals(1));
+      expect(state.alarms[0], equals(expectedAlarms[0]));
+
+      // reloading alarms from sharedPreferences
+      state = AlarmsState(sharedPreferences);
+
+      expect(state.alarmsCount, equals(1));
+      expect(state.alarms[0], equals(expectedAlarms[0]));
+
+      // delete last alarm
+      state.deleteAlarm(state.alarmsCount - 1);
+
+      expect(state.alarmsCount, equals(0));
+
+      // reloading alarms from sharedPreferences
+      state = AlarmsState(sharedPreferences);
+      
+      expect(state.alarmsCount, equals(0));
+    });
   });
 }
