@@ -31,6 +31,41 @@ void main() async {
       expect(alarmsState.alarms is UnmodifiableListView<Alarm>, equals(true));
     });
 
+    test('AlarmsState#switchAlarm disables/enables alarms', () async {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final initialAlarmsState = AlarmsState(sharedPreferences);
+      var expectedAlarms = parseAlarms(alarmsJson);
+
+      expect(initialAlarmsState.alarms[0].enabled, equals(expectedAlarms[0].enabled));
+      expect(initialAlarmsState.alarms[1].enabled, equals(expectedAlarms[1].enabled));
+      expect(initialAlarmsState.alarms[2].enabled, equals(expectedAlarms[2].enabled));
+
+      // inverting alarm enabled property
+      for( var i = 0 ; i < initialAlarmsState.alarms.length; i++) {
+        initialAlarmsState.switchAlarm(i, !initialAlarmsState.alarms[i].enabled);
+      }
+
+      expect(initialAlarmsState.alarms[0].enabled, equals(!expectedAlarms[0].enabled));
+      expect(initialAlarmsState.alarms[1].enabled, equals(!expectedAlarms[1].enabled));
+      expect(initialAlarmsState.alarms[2].enabled, equals(!expectedAlarms[2].enabled));
+
+      // checking that enabled property was persisted
+      final updatedAlarmsState = AlarmsState(sharedPreferences);
+
+      expect(updatedAlarmsState.alarms[0].enabled, equals(!expectedAlarms[0].enabled));
+      expect(updatedAlarmsState.alarms[1].enabled, equals(!expectedAlarms[1].enabled));
+      expect(updatedAlarmsState.alarms[2].enabled, equals(!expectedAlarms[2].enabled));
+
+      // returning initial state
+      for( var i = 0 ; i < initialAlarmsState.alarms.length; i++) {
+        initialAlarmsState.switchAlarm(i, !initialAlarmsState.alarms[i].enabled);
+      }
+
+      expect(initialAlarmsState.alarms[0].enabled, equals(expectedAlarms[0].enabled));
+      expect(initialAlarmsState.alarms[1].enabled, equals(expectedAlarms[1].enabled));
+      expect(initialAlarmsState.alarms[2].enabled, equals(expectedAlarms[2].enabled));
+    });
+
     test('AlarmsState#persistAlarms stores alarms to SharedSettings', () {
       var string = 'foo,bar,baz';
       expect(string.split(','), equals(['foo', 'bar', 'baz']));
