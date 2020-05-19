@@ -39,17 +39,17 @@ class AlarmsState extends ChangeNotifier {
     persistAndNotify();
   }
 
-  void switchAlarm(int alarmIndex, bool value) { // TODO unit test
+  void switchAlarm(int alarmIndex, bool value) {
     _alarms[alarmIndex].enabled = value;
     persistAndNotify();
   }
 
-  void persistAndNotify() {
+  void persistAndNotify() {  // TODO write widget test that checks notifyListeners() works
     persistAlarms();
     notifyListeners();
   }
 
-  void persistAlarms() { // TODO unit test
+  void persistAlarms() {
     sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
   }
 
