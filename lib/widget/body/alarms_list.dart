@@ -12,10 +12,14 @@ class AlarmsList extends StatelessWidget {
         return ListView(
           children: ListTile.divideTiles(
             context: context,
-            tiles: state.alarms.asMap().entries.map((entry) => AlarmTile(entry.key, entry.value)),
+            tiles: getAlarmTiles(state),
           ).toList(),
         );
       },
     );
+  }
+
+  static Iterable<Widget> getAlarmTiles(AlarmsState state) {
+    return state.alarms.asMap().entries.map((entry) => AlarmTile(entry.key, entry.value));
   }
 }

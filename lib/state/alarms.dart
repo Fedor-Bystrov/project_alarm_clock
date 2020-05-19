@@ -35,6 +35,12 @@ class AlarmsState extends ChangeNotifier { // TODO unit test
     notifyListeners();
   }
 
+  void switchAlarm(int alarmIndex, bool value) { // TODO unit test
+    _alarms[alarmIndex].enabled = value;
+    persistAlarms();
+    notifyListeners();
+  }
+
   void initTestAlarms() {
     List<Alarm> alarms = [
       Alarm(DateTime.parse("2012-02-27 08:29:00"), "Mon Wed Fri", "Don’t Sleep", true),
