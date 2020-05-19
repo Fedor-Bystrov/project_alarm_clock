@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:projectbudy/model/alarm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AlarmsState extends ChangeNotifier { // TODO unit test
+class AlarmsState extends ChangeNotifier {
   static const String alarmsKey = 'alarmsState';
 
   final SharedPreferences sharedPreferences;
@@ -17,7 +17,7 @@ class AlarmsState extends ChangeNotifier { // TODO unit test
   //  2. Alarm Deletion
   //  3. Edit alarm
 
-  AlarmsState(this.sharedPreferences) { // TODO unit test
+  AlarmsState(this.sharedPreferences) {
 //    initTestAlarms();
     _alarms = sharedPreferences
         .getStringList(alarmsKey)
@@ -49,7 +49,7 @@ class AlarmsState extends ChangeNotifier { // TODO unit test
     notifyListeners();
   }
 
-  void persistAlarms() {
+  void persistAlarms() { // TODO unit test
     sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
   }
 
