@@ -13,9 +13,8 @@ class AlarmsState extends ChangeNotifier {
   List<Alarm> _alarms;
 
   // TODO
-  //  1. Unit tests
-  //  2. Alarm Deletion
-  //  3. Edit alarm
+  //  1. Alarm Deletion
+  //  2. Edit alarm
 
   AlarmsState(this.sharedPreferences) {
 //    initTestAlarms();
@@ -34,7 +33,7 @@ class AlarmsState extends ChangeNotifier {
     return _alarms.length;
   }
 
-  void addAlarm(Alarm alarm) { // TODO unit test
+  void addAlarm(Alarm alarm) {
     _alarms.add(alarm);
     persistAndNotify();
   }

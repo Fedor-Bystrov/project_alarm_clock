@@ -18,12 +18,12 @@ List<Alarm> parseAlarms(List<String> alarmsPre) =>
 
 void main() async {
   group('AlarmsState', () {
-    SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
-
     test('AlarmsState#alarms getter returns all alarms', () async {
+      SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
+
       final sharedPreferences = await SharedPreferences.getInstance();
       final alarmsState = AlarmsState(sharedPreferences);
-      var expectedAlarms = parseAlarms(alarmsJson);
+      final expectedAlarms = parseAlarms(alarmsJson);
 
       expect(alarmsState.alarmsCount, equals(expectedAlarms.length));
       expect(alarmsState.alarms.length, equals(expectedAlarms.length));
@@ -32,16 +32,18 @@ void main() async {
     });
 
     test('AlarmsState#switchAlarm disables/enables alarms', () async {
+      SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
+
       final sharedPreferences = await SharedPreferences.getInstance();
       final initialAlarmsState = AlarmsState(sharedPreferences);
-      var expectedAlarms = parseAlarms(alarmsJson);
+      final expectedAlarms = parseAlarms(alarmsJson);
 
       expect(initialAlarmsState.alarms[0].enabled, equals(expectedAlarms[0].enabled));
       expect(initialAlarmsState.alarms[1].enabled, equals(expectedAlarms[1].enabled));
       expect(initialAlarmsState.alarms[2].enabled, equals(expectedAlarms[2].enabled));
 
       // inverting alarm enabled property
-      for( var i = 0 ; i < initialAlarmsState.alarms.length; i++) {
+      for (var i = 0; i < initialAlarmsState.alarms.length; i++) {
         initialAlarmsState.switchAlarm(i, !initialAlarmsState.alarms[i].enabled);
       }
 
@@ -55,20 +57,28 @@ void main() async {
       expect(updatedAlarmsState.alarms[0].enabled, equals(!expectedAlarms[0].enabled));
       expect(updatedAlarmsState.alarms[1].enabled, equals(!expectedAlarms[1].enabled));
       expect(updatedAlarmsState.alarms[2].enabled, equals(!expectedAlarms[2].enabled));
-
-      // returning initial state
-      for( var i = 0 ; i < initialAlarmsState.alarms.length; i++) {
-        initialAlarmsState.switchAlarm(i, !initialAlarmsState.alarms[i].enabled);
-      }
-
-      expect(initialAlarmsState.alarms[0].enabled, equals(expectedAlarms[0].enabled));
-      expect(initialAlarmsState.alarms[1].enabled, equals(expectedAlarms[1].enabled));
-      expect(initialAlarmsState.alarms[2].enabled, equals(expectedAlarms[2].enabled));
     });
 
-    test('AlarmsState#persistAlarms stores alarms to SharedSettings', () {
-      var string = 'foo,bar,baz';
-      expect(string.split(','), equals(['foo', 'bar', 'baz']));
+    test('AlarmsState#addAlarm adds and persists an alarm', () async {
+      SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
+
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final initialState = AlarmsState(sharedPreferences);
+      final expectedAlarms = parseAlarms(alarmsJson);
+
+      expect(initialState.alarms, equals(expectedAlarms));
+
+      final newAlarm = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "Alala", true);
+
+      initialState.addAlarm(newAlarm);
+      expect(initialState.alarmsCount, equals(expectedAlarms.length + 1));
+
+      expectedAlarms.add(newAlarm);
+      expect(initialState.alarms, equals(expectedAlarms));
+
+      // reloading alarms from sharedPreferences
+      final updatedState = AlarmsState(sharedPreferences);
+      expect(updatedState.alarms, equals(expectedAlarms));
     });
   });
 }
