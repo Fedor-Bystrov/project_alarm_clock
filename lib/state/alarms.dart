@@ -12,6 +12,10 @@ class AlarmsState extends ChangeNotifier { // TODO unit test
   final SharedPreferences sharedPreferences;
   List<Alarm> _alarms;
 
+  // TODO
+  //  1. Alarm Deletion
+  //  2. Edit alarm
+
   AlarmsState(this.sharedPreferences) { // TODO unit test
 //    initTestAlarms();
     _alarms = sharedPreferences
