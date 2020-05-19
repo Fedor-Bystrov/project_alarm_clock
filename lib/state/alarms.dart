@@ -13,8 +13,9 @@ class AlarmsState extends ChangeNotifier { // TODO unit test
   List<Alarm> _alarms;
 
   // TODO
-  //  1. Alarm Deletion
-  //  2. Edit alarm
+  //  1. Unit tests
+  //  2. Alarm Deletion
+  //  3. Edit alarm
 
   AlarmsState(this.sharedPreferences) { // TODO unit test
 //    initTestAlarms();
