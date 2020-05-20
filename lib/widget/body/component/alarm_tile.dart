@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/state/alarms.dart';
 import 'package:projectbudy/util/colors.dart';
 import 'alarm_tile_subtitle.dart';
@@ -10,8 +9,8 @@ import 'alarm_tile_title.dart';
 
 const sensitivity = 10; // TODO подтюнить когда кнопки edit и delete будут готовы
 
-enum AlarmTileState {
-  NORMAL,
+enum TileState {
+  DEFAULT,
   EDIT,
   DELETE,
 }
@@ -26,7 +25,7 @@ class AlarmTile extends StatefulWidget {
 }
 
 class _AlarmTileState extends State<AlarmTile> {
-  AlarmTileState _tileState = AlarmTileState.NORMAL;
+  TileState _tileState = TileState.DEFAULT;
 
   final int _alarmIndex;
 
@@ -34,62 +33,68 @@ class _AlarmTileState extends State<AlarmTile> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Consumer<AlarmsState>(
-        builder: (BuildContext context, AlarmsState state, _) {
-          final alarm = state.alarms[_alarmIndex];
-          return ListTile(
+    return Consumer<AlarmsState>(
+      builder: (BuildContext context, AlarmsState state, _) {
+        final alarm = state.alarms[_alarmIndex];
+        final focusNode = Focus.of(context);
+        final currentState = focusNode.hasFocus ? _tileState : TileState.DEFAULT;
+        return GestureDetector(
+          child: ListTile(
+            enabled: alarm.enabled,
             title: AlarmTileTitle(alarm),
             subtitle: AlarmTileSubtitle(alarm),
-            enabled: alarm.enabled,
-            leading: _getLeading(state, alarm, _tileState),
-            trailing: _getTrailing(state, alarm),
-          );
-        },
-      ),
-      onHorizontalDragUpdate: _onDragUpdate,
-      onTap: _onTap,
-      // TODO on focus lose return to Normal
+            leading: getLeading(state, _alarmIndex, currentState),
+            trailing: getTrailing(state, _alarmIndex, currentState),
+          ),
+          onHorizontalDragUpdate: (d) => _onDragUpdate(d, focusNode),
+          onTap: () => _onTap(focusNode),
+        );
+      },
     );
   }
 
-  Widget _getLeading(AlarmsState state, Alarm alarm, AlarmTileState tileState) {
-    return null;
-  }
-
-  Widget _getTrailing(AlarmsState state, Alarm alarm) {
-    switch (_tileState) {
-      case AlarmTileState.NORMAL:
-        return Switch(
-          onChanged: (val) => state.switchAlarm(_alarmIndex, val),
-          value: alarm.enabled,
-          activeColor: CommonColors.accentColor,
-        );
-      case AlarmTileState.DELETE:
-        return Text("delete");
-      default:
-        return null;
-    }
-  }
-
-  void _onDragUpdate(details) {
+  void _onDragUpdate(DragUpdateDetails details, FocusNode focusNode) {
+    focusNode.requestFocus();
     if (details.delta.dx > sensitivity) {
-      _changeTileState(AlarmTileState.EDIT);
+      _changeTileState(TileState.EDIT);
       return;
     }
     if (details.delta.dx < -sensitivity) {
-      _changeTileState(AlarmTileState.DELETE);
+      _changeTileState(TileState.DELETE);
       return;
     }
   }
 
-  void _onTap() => _changeTileState(AlarmTileState.NORMAL);
+  void _onTap(FocusNode focusNode) {
+    focusNode.requestFocus();
+    _changeTileState(TileState.DEFAULT);
+  }
 
-  void _changeTileState(AlarmTileState desiredState) {
+  void _changeTileState(TileState desiredState) {
     if (_tileState != desiredState) {
       setState(() {
         _tileState = desiredState;
       });
     }
+  }
+}
+
+Widget getLeading(AlarmsState state, int alarmIndex, TileState tileState) {
+  return tileState == TileState.EDIT ? Text("Edit") : null; // TODO
+}
+
+Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState) {
+  final alarm = state.alarms[alarmIndex];
+  switch (tileState) {
+    case TileState.DEFAULT:
+      return Switch(
+        onChanged: (val) => state.switchAlarm(alarmIndex, val),
+        value: alarm.enabled,
+        activeColor: CommonColors.accentColor,
+      );
+    case TileState.DELETE:
+      return Text("delete"); // TODO
+    default:
+      return null;
   }
 }
