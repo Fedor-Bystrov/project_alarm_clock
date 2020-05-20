@@ -77,18 +77,18 @@ class _AlarmTileState extends State<AlarmTile> {
 
   void _onDragUpdate(details) {
     if (details.delta.dx > sensitivity) {
-      changeTileState(AlarmTileState.EDIT);
+      _changeTileState(AlarmTileState.EDIT);
       return;
     }
     if (details.delta.dx < -sensitivity) {
-      changeTileState(AlarmTileState.DELETE);
+      _changeTileState(AlarmTileState.DELETE);
       return;
     }
   }
 
-  void _onTap() => changeTileState(AlarmTileState.NORMAL);
+  void _onTap() => _changeTileState(AlarmTileState.NORMAL);
 
-  void changeTileState(AlarmTileState desiredState) {
+  void _changeTileState(AlarmTileState desiredState) {
     if (_tileState != desiredState) {
       setState(() {
         _tileState = desiredState;
