@@ -39,7 +39,6 @@ class _AlarmTileState extends State<AlarmTile> {
         builder: (BuildContext context, AlarmsState state, Widget child) {
           final alarm = state.alarms[_alarmIndex];
           return ListTile(
-            dense: false,
             title: AlarmTileTitle(getDateFormat(context).format(alarm.time)),
             subtitle: Text("${alarm.label}${alarm.repeat == null ? '' : ', ${alarm.repeat}'} "),
             enabled: alarm.enabled,
