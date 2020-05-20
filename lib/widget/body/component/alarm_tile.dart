@@ -25,8 +25,9 @@ class AlarmTile extends StatefulWidget {
 }
 
 class _AlarmTileState extends State<AlarmTile> {
-  final int _alarmIndex;
   AlarmTileState _tileState = AlarmTileState.NORMAL;
+
+  final int _alarmIndex;
 
   _AlarmTileState(this._alarmIndex);
 
@@ -45,12 +46,13 @@ class _AlarmTileState extends State<AlarmTile> {
             subtitle: Text("${alarm.label}${alarm.repeat == null ? '' : ', ${alarm.repeat}'} "),
             enabled: alarm.enabled,
             leading: _getLeading(state, alarm, _tileState),
-            trailing: _getTrailing(state, alarm, _tileState),
+            trailing: _getTrailing(state, alarm),
           );
         },
       ),
       onHorizontalDragUpdate: _onDragUpdate,
       onTap: _onTap,
+      // TODO on focus lose return to Normal
     );
   }
 
@@ -58,8 +60,8 @@ class _AlarmTileState extends State<AlarmTile> {
     return null;
   }
 
-  Widget _getTrailing(AlarmsState state, Alarm alarm, AlarmTileState tileState) {
-    switch (tileState) {
+  Widget _getTrailing(AlarmsState state, Alarm alarm) {
+    switch (_tileState) {
       case AlarmTileState.NORMAL:
         return Switch(
           onChanged: (val) => state.switchAlarm(_alarmIndex, val),
@@ -75,21 +77,22 @@ class _AlarmTileState extends State<AlarmTile> {
 
   void _onDragUpdate(details) {
     if (details.delta.dx > sensitivity) {
-      setState(() {
-        _tileState = AlarmTileState.EDIT;
-      });
-      print("wow right");
-    } else if (details.delta.dx < -sensitivity) {
-      setState(() {
-        _tileState = AlarmTileState.DELETE;
-      });
-      print("wow left");
+      changeTileState(AlarmTileState.EDIT);
+      return;
+    }
+    if (details.delta.dx < -sensitivity) {
+      changeTileState(AlarmTileState.DELETE);
+      return;
     }
   }
 
-  void _onTap() {
-    setState(() {
-      _tileState = AlarmTileState.NORMAL;
-    });
+  void _onTap() => changeTileState(AlarmTileState.NORMAL);
+
+  void changeTileState(AlarmTileState desiredState) {
+    if (_tileState != desiredState) {
+      setState(() {
+        _tileState = desiredState;
+      });
+    }
   }
 }
