@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/state/alarms.dart';
 import 'package:projectbudy/util/colors.dart';
-import 'package:projectbudy/util/utils.dart';
+import 'alarm_tile_subtitle.dart';
 import 'alarm_tile_title.dart';
 
-const sensitivity = 10;
+const sensitivity = 10; // TODO подтюнить когда кнопки edit и delete будут готовы
 
 enum AlarmTileState {
   NORMAL,
@@ -36,11 +36,11 @@ class _AlarmTileState extends State<AlarmTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Consumer<AlarmsState>(
-        builder: (BuildContext context, AlarmsState state, Widget child) {
+        builder: (BuildContext context, AlarmsState state, _) {
           final alarm = state.alarms[_alarmIndex];
           return ListTile(
-            title: AlarmTileTitle(getDateFormat(context).format(alarm.time)),
-            subtitle: Text("${alarm.label}${alarm.repeat == null ? '' : ', ${alarm.repeat}'} "),
+            title: AlarmTileTitle(alarm),
+            subtitle: AlarmTileSubtitle(alarm),
             enabled: alarm.enabled,
             leading: _getLeading(state, alarm, _tileState),
             trailing: _getTrailing(state, alarm),
