@@ -9,17 +9,19 @@ class AlarmsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AlarmsState>(
       builder: (BuildContext context, AlarmsState state, Widget child) {
-        return ListView(
-          children: ListTile.divideTiles(
-            context: context,
-            tiles: getAlarmTiles(state),
-          ).toList(),
+        return FocusScope(
+          child: ListView(
+            children: ListTile.divideTiles(
+              context: context,
+              tiles: getAlarmTiles(state),
+            ).toList(),
+          ),
         );
       },
     );
   }
 
   static Iterable<Widget> getAlarmTiles(AlarmsState state) {
-    return Iterable<int>.generate(state.alarms.length).map((idx) => AlarmTile(idx));
+    return Iterable<int>.generate(state.alarms.length).map((idx) => Focus(child: AlarmTile(idx)));
   }
 }
