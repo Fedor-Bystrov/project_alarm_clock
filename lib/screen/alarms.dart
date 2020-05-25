@@ -10,8 +10,20 @@ class AlarmsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Focus(
+      child: _AlarmsScreen(),
+    );
+  }
+}
+
+class _AlarmsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AlarmsAppBar(onPressed: () => Navigator.pushNamed(context, AddAlarmScreen.id)),
+      appBar: AlarmsAppBar(onPressed: () async {
+        await Navigator.pushNamed(context, AddAlarmScreen.id);
+        Focus.of(context).requestFocus();
+      }),
       bottomNavigationBar: BottomNavBar(),
       body: AlarmsList(),
     );
