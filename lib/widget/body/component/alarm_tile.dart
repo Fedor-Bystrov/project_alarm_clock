@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:projectbudy/state/alarms.dart';
 import 'package:projectbudy/util/colors.dart';
+import 'buttons/alarm_tile_delete.dart';
 import 'alarm_tile_subtitle.dart';
 import 'alarm_tile_title.dart';
 
@@ -102,7 +103,7 @@ Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState) {
         activeColor: CommonColors.accentColor,
       );
     case TileState.DELETE:
-      return Text("delete"); // TODO
+      return AlarmTileDeleteBtn(onPressed: () => state.deleteAlarm(alarmIndex));
     default:
       return null;
   }
