@@ -19,17 +19,19 @@ class Application extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AlarmsState>(create: (_) => AlarmsState(sharedPreferences)),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Budy",
-        theme: ThemeData(
-          primaryColor: CommonColors.primaryColor,
+      child: FocusScope(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "Budy",
+          theme: ThemeData(
+            primaryColor: CommonColors.primaryColor,
+          ),
+          initialRoute: AlarmsScreen.id,
+          routes: {
+            AlarmsScreen.id: (context) => AlarmsScreen(),
+            AddAlarmScreen.id: (context) => AddAlarmScreen(),
+          },
         ),
-        initialRoute: AlarmsScreen.id,
-        routes: {
-          AlarmsScreen.id: (context) => AlarmsScreen(),
-          AddAlarmScreen.id: (context) => AddAlarmScreen(),
-        },
       ),
     );
   }

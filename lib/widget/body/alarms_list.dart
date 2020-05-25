@@ -9,13 +9,11 @@ class AlarmsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AlarmsState>(
       builder: (BuildContext context, AlarmsState state, Widget child) {
-        return FocusScope(
-          child: ListView(
-            children: ListTile.divideTiles(
-              context: context,
-              tiles: getAlarmTiles(state),
-            ).toList(),
-          ),
+        return ListView(
+          children: ListTile.divideTiles(
+            context: context,
+            tiles: getAlarmTiles(state),
+          ).toList(),
         );
       },
     );
