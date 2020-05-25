@@ -7,8 +7,6 @@ import 'package:projectbudy/util/colors.dart';
 import 'alarm_tile_subtitle.dart';
 import 'alarm_tile_title.dart';
 
-const sensitivity = 10; // TODO подтюнить когда кнопки edit и delete будут готовы
-
 enum TileState {
   DEFAULT,
   EDIT,
@@ -46,21 +44,32 @@ class _AlarmTileState extends State<AlarmTile> {
             leading: getLeading(state, _alarmIndex, currentState),
             trailing: getTrailing(state, _alarmIndex, currentState),
           ),
-          onHorizontalDragUpdate: (d) => _onDragUpdate(d, focusNode),
+          onHorizontalDragEnd: (d) => _onDragUpdate(d, focusNode),
           onTap: () => _onTap(focusNode),
         );
       },
     );
   }
 
-  void _onDragUpdate(DragUpdateDetails details, FocusNode focusNode) {
+  void _onDragUpdate(DragEndDetails details, FocusNode focusNode) {
     focusNode.requestFocus();
-    if (details.delta.dx > sensitivity) {
-      _changeTileState(TileState.EDIT);
+    // swipe right
+    if (details.primaryVelocity > 0) {
+      if (_tileState == TileState.DELETE) {
+        _changeTileState(TileState.DEFAULT);
+      } else {
+        _changeTileState(TileState.EDIT);
+      }
       return;
     }
-    if (details.delta.dx < -sensitivity) {
-      _changeTileState(TileState.DELETE);
+
+    // swipe left
+    if (details.primaryVelocity < 0) {
+      if (_tileState == TileState.EDIT) {
+        _changeTileState(TileState.DEFAULT);
+      } else {
+        _changeTileState(TileState.DELETE);
+      }
       return;
     }
   }
