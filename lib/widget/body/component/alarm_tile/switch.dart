@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:projectbudy/util/colors.dart';
 
-class AlarmTileEnableSwitch extends StatelessWidget {
+class AlarmTileSwitch extends StatelessWidget {
   final bool enabled;
   final ValueChanged<bool> onChanged;
 
   // TODO change according to design
-  AlarmTileEnableSwitch({@required this.enabled, @required this.onChanged});
+  AlarmTileSwitch({@required this.enabled, @required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

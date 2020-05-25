@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/state/alarms.dart';
-import 'buttons/alarm_tile_edit.dart';
-import 'buttons/alarm_tile_enable_switch.dart';
-import 'buttons/alarm_tile_delete.dart';
-import 'alarm_tile_subtitle.dart';
-import 'alarm_tile_title.dart';
+import 'alarm_tile/edit_btn.dart';
+import 'alarm_tile/switch.dart';
+import 'alarm_tile/delete_btn.dart';
+import 'alarm_tile/subtitle.dart';
+import 'alarm_tile/title.dart';
 
 enum TileState {
   DEFAULT,
@@ -104,7 +104,7 @@ Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState) {
   final alarm = state.alarms[alarmIndex];
   switch (tileState) {
     case TileState.DEFAULT:
-      return AlarmTileEnableSwitch(
+      return AlarmTileSwitch(
         enabled: alarm.enabled,
         onChanged: (val) => state.switchAlarm(alarmIndex, val),
       );
