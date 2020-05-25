@@ -5,7 +5,7 @@ import 'package:projectbudy/util/colors.dart';
 class AlarmTileDeleteBtn extends StatelessWidget {
   final VoidCallback onPressed;
 
-  AlarmTileDeleteBtn({this.onPressed});
+  AlarmTileDeleteBtn({@required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

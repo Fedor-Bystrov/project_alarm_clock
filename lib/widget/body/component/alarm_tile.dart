@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/state/alarms.dart';
-import 'package:projectbudy/util/colors.dart';
+import 'buttons/alarm_tile_enable_switch.dart';
 import 'buttons/alarm_tile_delete.dart';
 import 'alarm_tile_subtitle.dart';
 import 'alarm_tile_title.dart';
@@ -97,13 +97,14 @@ Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState) {
   final alarm = state.alarms[alarmIndex];
   switch (tileState) {
     case TileState.DEFAULT:
-      return Switch(
+      return AlarmTileEnableSwitch(
+        enabled: alarm.enabled,
         onChanged: (val) => state.switchAlarm(alarmIndex, val),
-        value: alarm.enabled,
-        activeColor: CommonColors.accentColor,
       );
     case TileState.DELETE:
-      return AlarmTileDeleteBtn(onPressed: () => state.deleteAlarm(alarmIndex));
+      return AlarmTileDeleteBtn(
+        onPressed: () => state.deleteAlarm(alarmIndex),
+      );
     default:
       return null;
   }
