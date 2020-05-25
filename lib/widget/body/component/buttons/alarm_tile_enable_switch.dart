@@ -6,6 +6,7 @@ class AlarmTileEnableSwitch extends StatelessWidget {
   final bool enabled;
   final ValueChanged<bool> onChanged;
 
+  // TODO change according to design
   AlarmTileEnableSwitch({@required this.enabled, @required this.onChanged});
 
   @override

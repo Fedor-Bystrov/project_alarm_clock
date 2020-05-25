@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/state/alarms.dart';
+import 'buttons/alarm_tile_edit.dart';
 import 'buttons/alarm_tile_enable_switch.dart';
 import 'buttons/alarm_tile_delete.dart';
 import 'alarm_tile_subtitle.dart';
@@ -90,7 +91,13 @@ class _AlarmTileState extends State<AlarmTile> {
 }
 
 Widget getLeading(AlarmsState state, int alarmIndex, TileState tileState) {
-  return tileState == TileState.EDIT ? Text("Edit") : null; // TODO
+  return tileState != TileState.EDIT
+      ? null
+      : AlarmTileEditBtn(
+          onPressed: () {
+            print("boo");
+          },
+        );
 }
 
 Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState) {
