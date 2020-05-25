@@ -40,6 +40,7 @@ class AlarmsState extends ChangeNotifier {
 
   void deleteAlarm(int alarmIndex) {
     _alarms.removeAt(alarmIndex);
+    // TODO delete alarm job
     persistAndNotify();
   }
 
