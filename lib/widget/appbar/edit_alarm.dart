@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:projectbudy/util/colors.dart';
 
-class AddAlarmAppBar extends AppBar {
-  AddAlarmAppBar({@required BuildContext context, @required VoidCallback onPressed})
+class EditAlarmAppBar extends AppBar {
+  EditAlarmAppBar(
+      {@required BuildContext context, @required VoidCallback onPressed, @required Text title})
       : super(
           centerTitle: true,
-          title: const Text("Add Alarm"), // TODO translation
+          title: title,
           iconTheme: IconThemeData(color: CommonColors.accentColor),
           actions: <Widget>[
             IconButton(
