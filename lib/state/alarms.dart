@@ -58,7 +58,6 @@ class AlarmsState extends ChangeNotifier {
   }
 
   Future<void> persistAndNotify() async {
-    // TODO write widget test that checks notifyListeners() works
     await persistAlarms();
     notifyListeners();
   }
