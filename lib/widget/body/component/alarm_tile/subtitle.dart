@@ -9,6 +9,7 @@ class AlarmTileSubtitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("${_alarm.label}${_alarm.repeat == null ? '' : ', ${_alarm.repeat}'} ");
+    return Text(
+        "${_alarm.label}${_alarm.repeat == null ? '' : ', ${_alarm.repeat}'} id : ${_alarm.id}"); // TODO delete ID before release
   }
 }
