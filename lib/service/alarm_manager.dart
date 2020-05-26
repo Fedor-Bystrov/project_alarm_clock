@@ -4,7 +4,7 @@ import 'package:projectbudy/model/alarm.dart';
 
 class AlarmManager {
   static Future<void> addAlarm(Alarm alarm) async {
-    AndroidAlarmManager.oneShotAt(
+    return AndroidAlarmManager.oneShotAt(
       // TODO don't fire immediately  after creation
       alarm.time,
       alarm.id, // TODO Track alarm Ids
@@ -15,8 +15,8 @@ class AlarmManager {
     );
   }
 
-  static Future<void> cancel(Alarm alarm) async {
-    AndroidAlarmManager.cancel(alarm.id);
+  static Future<bool> cancel(Alarm alarm) async {
+    return AndroidAlarmManager.cancel(alarm.id);
   }
 
   static void _callback(int id) {

@@ -2,12 +2,14 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import 'package:projectbudy/model/alarm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:projectbudy/service/alarm_manager.dart';
+import 'package:projectbudy/model/alarm.dart';
 
 class AlarmsState extends ChangeNotifier {
   static const String alarmsKey = 'alarmsState';
+  static const String nextAlarmIdKey = 'nextAlarmId';
 
   final SharedPreferences sharedPreferences;
   List<Alarm> _alarms;
@@ -33,9 +35,17 @@ class AlarmsState extends ChangeNotifier {
     return _alarms.length;
   }
 
-  void addAlarm(Alarm alarm) {
+  Future<int> _nextAlarmId() async {
+    var nextId = sharedPreferences.getInt(nextAlarmIdKey) ?? 0;
+    await sharedPreferences.setInt(nextAlarmIdKey, ++nextId);
+    return nextId;
+  }
+
+  void addAlarm(Alarm alarm) async {
+    alarm.id = await this._nextAlarmId();
     _alarms.add(alarm);
-    persistAndNotify();
+    await persistAndNotify();
+    await AlarmManager.addAlarm(alarm);
   }
 
   void deleteAlarm(int alarmIndex) {
@@ -49,13 +59,14 @@ class AlarmsState extends ChangeNotifier {
     persistAndNotify();
   }
 
-  void persistAndNotify() {  // TODO write widget test that checks notifyListeners() works
-    persistAlarms();
+  Future<void> persistAndNotify() async {
+    // TODO write widget test that checks notifyListeners() works
+    await persistAlarms();
     notifyListeners();
   }
 
-  void persistAlarms() {
-    sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
+  Future<bool> persistAlarms() async {
+    return sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
   }
 
   void initTestAlarms() {
