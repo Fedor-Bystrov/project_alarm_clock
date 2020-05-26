@@ -37,7 +37,7 @@ class AlarmsState extends ChangeNotifier {
 
   Future<int> _nextAlarmId() async {
     var nextId = sharedPreferences.getInt(nextAlarmIdKey) ?? 0;
-    await sharedPreferences.setInt(nextAlarmIdKey, ++nextId);
+    await sharedPreferences.setInt(nextAlarmIdKey, nextId + 1);
     return nextId;
   }
 

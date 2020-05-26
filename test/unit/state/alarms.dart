@@ -71,7 +71,11 @@ void main() async {
     });
 
     test('AlarmsState#addAlarm adds and persists an alarm', () async {
-      SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
+      int nextAlarmId = alarmsJson.length;
+      SharedPreferences.setMockInitialValues({
+        AlarmsState.alarmsKey: alarmsJson,
+        AlarmsState.nextAlarmIdKey: nextAlarmId,
+      });
 
       final sharedPreferences = await SharedPreferences.getInstance();
       final initialState = AlarmsState(sharedPreferences);
@@ -82,6 +86,9 @@ void main() async {
       final newAlarm = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "Alala", true);
 
       await initialState.addAlarm(newAlarm);
+
+      // check alarm id
+      expect(newAlarm.id, equals(nextAlarmId));
       expect(initialState.alarmsCount, equals(expectedAlarms.length + 1));
 
       expectedAlarms.add(newAlarm);
