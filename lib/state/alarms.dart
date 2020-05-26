@@ -19,7 +19,6 @@ class AlarmsState extends ChangeNotifier {
   //  2. Edit alarm
 
   AlarmsState(this.sharedPreferences) {
-//    initTestAlarms();
     _alarms = sharedPreferences
         .getStringList(alarmsKey)
         .map((a) => json.decode(a))
@@ -67,15 +66,5 @@ class AlarmsState extends ChangeNotifier {
 
   Future<bool> persistAlarms() async {
     return sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
-  }
-
-  void initTestAlarms() {
-    List<Alarm> alarms = [
-      Alarm(DateTime.parse("2012-02-27 08:29:00"), "Mon Wed Fri", "Don’t Sleep", true),
-      Alarm(DateTime.parse("2012-02-27 10:00:00"), "Every Day", "Alarm", false),
-      Alarm(DateTime.parse("2012-02-27 13:00:00"), null, "Alarm", true),
-      Alarm(DateTime.parse("2012-02-27 18:20:00"), "Every Day", "Alarm", false),
-    ];
-    sharedPreferences.setStringList(alarmsKey, alarms.map((a) => json.encode(a)).toList());
   }
 }
