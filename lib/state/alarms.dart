@@ -15,8 +15,7 @@ class AlarmsState extends ChangeNotifier {
   List<Alarm> _alarms;
 
   // TODO
-  //  1. Alarm Deletion
-  //  2. Edit alarm
+  //  1. Edit alarm
 
   AlarmsState(this.sharedPreferences) {
     _alarms = sharedPreferences
@@ -47,10 +46,10 @@ class AlarmsState extends ChangeNotifier {
     await AlarmManager.addAlarm(alarm);
   }
 
-  void deleteAlarm(int alarmIndex) {
+  void deleteAlarm(int alarmIndex) async {
+    await AlarmManager.cancel(_alarms[alarmIndex]);
     _alarms.removeAt(alarmIndex);
-    // TODO delete alarm job
-    persistAndNotify();
+    await persistAndNotify();
   }
 
   void switchAlarm(int alarmIndex, bool value) {
