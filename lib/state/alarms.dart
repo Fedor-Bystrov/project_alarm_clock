@@ -12,12 +12,14 @@ class AlarmsState extends ChangeNotifier {
   static const String nextAlarmIdKey = 'nextAlarmId';
 
   final SharedPreferences sharedPreferences;
+  AlarmManager _alarmManager;
   List<Alarm> _alarms;
 
   // TODO
   //  1. Edit alarm
 
   AlarmsState(this.sharedPreferences) {
+    _alarmManager = AlarmManager.getInstance();
     _alarms = sharedPreferences
         .getStringList(alarmsKey)
         .map((a) => json.decode(a))
@@ -43,11 +45,11 @@ class AlarmsState extends ChangeNotifier {
     alarm.id = await this._nextAlarmId();
     _alarms.add(alarm);
     await persistAndNotify();
-    await AlarmManager.addAlarm(alarm);
+    await _alarmManager.addAlarm(alarm);
   }
 
   Future<void> deleteAlarm(int alarmIndex) async {
-    await AlarmManager.cancel(_alarms[alarmIndex]);
+    await _alarmManager.cancel(_alarms[alarmIndex]);
     _alarms.removeAt(alarmIndex);
     await persistAndNotify();
   }

@@ -1,22 +1,33 @@
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:flutter_test/flutter_test.dart' as ft;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/test.dart';
+import 'package:mockito/mockito.dart';
 
+import 'package:projectbudy/service/alarm_manager.dart';
 import 'package:projectbudy/state/alarms.dart';
 import 'package:projectbudy/model/alarm.dart';
 
 const alarmsJson = [
-  '{"time": "2012-02-27T08:29:00.000", "repeat": "Mon", "label": "Don’t Sleep", "enabled": false}',
-  '{"time": "2012-02-27T18:20:00.000", "repeat": "Every Day", "label": "Alarm", "enabled": true}',
-  '{"time": "2020-05-17T23:26:00.000", "repeat": null, "label": "Alarm", "enabled": false}'
+  '{"id": 0, "time": "2012-02-27T08:29:00.000", "repeat": "Mon", "label": "Don’t Sleep", "enabled": false}',
+  '{"id": 1, "time": "2012-02-27T18:20:00.000", "repeat": "Every Day", "label": "Alarm", "enabled": true}',
+  '{"id": 2, "time": "2020-05-17T23:26:00.000", "repeat": null, "label": "Alarm", "enabled": false}'
 ];
 
 List<Alarm> parseAlarms(List<String> alarmsPre) =>
     alarmsJson.map((a) => json.decode(a)).map((a) => Alarm.fromJson(a)).toList();
 
+class MockAlarmManager extends Mock implements AlarmManager {}
+
 void main() async {
+  ft.TestWidgetsFlutterBinding.ensureInitialized();
+
+  final mockAlarmManager = MockAlarmManager();
+  when(mockAlarmManager.addAlarm(any)).thenAnswer((realInvocation) async => null);
+  AlarmManager.mockAlarmManager(mockAlarmManager);
+
   group('AlarmsState', () {
     test('AlarmsState#alarms getter returns all alarms', () async {
       SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
@@ -70,7 +81,7 @@ void main() async {
 
       final newAlarm = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "Alala", true);
 
-      initialState.addAlarm(newAlarm);
+      await initialState.addAlarm(newAlarm);
       expect(initialState.alarmsCount, equals(expectedAlarms.length + 1));
 
       expectedAlarms.add(newAlarm);
@@ -91,7 +102,7 @@ void main() async {
       expect(state.alarms, equals(expectedAlarms));
 
       // delete last alarm
-      state.deleteAlarm(state.alarmsCount - 1);
+      await state.deleteAlarm(state.alarmsCount - 1);
 
       expect(state.alarmsCount, equals(2));
       expect(state.alarms[0], equals(expectedAlarms[0]));
@@ -105,7 +116,7 @@ void main() async {
       expect(state.alarms[1], equals(expectedAlarms[1]));
 
       // delete one more alarm
-      state.deleteAlarm(state.alarmsCount - 1);
+      await state.deleteAlarm(state.alarmsCount - 1);
 
       expect(state.alarmsCount, equals(1));
       expect(state.alarms[0], equals(expectedAlarms[0]));
@@ -117,13 +128,13 @@ void main() async {
       expect(state.alarms[0], equals(expectedAlarms[0]));
 
       // delete last alarm
-      state.deleteAlarm(state.alarmsCount - 1);
+      await state.deleteAlarm(state.alarmsCount - 1);
 
       expect(state.alarmsCount, equals(0));
 
       // reloading alarms from sharedPreferences
       state = AlarmsState(sharedPreferences);
-      
+
       expect(state.alarmsCount, equals(0));
     });
   });
