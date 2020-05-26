@@ -39,14 +39,14 @@ class AlarmsState extends ChangeNotifier {
     return nextId;
   }
 
-  void addAlarm(Alarm alarm) async {
+  Future<void> addAlarm(Alarm alarm) async {
     alarm.id = await this._nextAlarmId();
     _alarms.add(alarm);
     await persistAndNotify();
     await AlarmManager.addAlarm(alarm);
   }
 
-  void deleteAlarm(int alarmIndex) async {
+  Future<void> deleteAlarm(int alarmIndex) async {
     await AlarmManager.cancel(_alarms[alarmIndex]);
     _alarms.removeAt(alarmIndex);
     await persistAndNotify();
