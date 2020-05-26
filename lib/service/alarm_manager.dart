@@ -7,7 +7,7 @@ class AlarmManager {
     AndroidAlarmManager.oneShotAt(
         // TODO don't fire immediately  after creation
         alarm.time,
-        1, // TODO Track alarm Ids
+        alarm.id, // TODO Track alarm Ids
         _callback,
         exact: true,
         wakeup: true,

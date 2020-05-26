@@ -1,4 +1,5 @@
 class Alarm {
+  int id;
   DateTime time;
   String repeat;
   String label;
@@ -21,7 +22,7 @@ class Alarm {
 
   @override
   String toString() {
-    return '{time: $time, repeat: $repeat, label: $label, enabled: $enabled}';
+    return 'Alarm{id: $id, time: $time, repeat: $repeat, label: $label, enabled: $enabled}';
   }
 
   @override
@@ -29,11 +30,13 @@ class Alarm {
       identical(this, other) ||
       other is Alarm &&
           runtimeType == other.runtimeType &&
+          id == other.id &&
           time == other.time &&
           repeat == other.repeat &&
           label == other.label &&
           enabled == other.enabled;
 
   @override
-  int get hashCode => time.hashCode ^ repeat.hashCode ^ label.hashCode ^ enabled.hashCode;
+  int get hashCode =>
+      id.hashCode ^ time.hashCode ^ repeat.hashCode ^ label.hashCode ^ enabled.hashCode;
 }
