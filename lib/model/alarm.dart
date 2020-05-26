@@ -11,13 +11,15 @@ class Alarm {
       : time = DateTime.parse(json['time']),
         repeat = json['repeat'],
         label = json['label'],
-        enabled = json['enabled'];
+        enabled = json['enabled'],
+        id = json['id'];
 
   Map<String, dynamic> toJson() => {
         'time': time.toIso8601String(),
         'repeat': repeat,
         'label': label,
         'enabled': enabled,
+        'id': id,
       };
 
   @override
