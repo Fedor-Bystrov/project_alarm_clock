@@ -99,6 +99,41 @@ void main() async {
       expect(updatedState.alarms, equals(expectedAlarms));
     });
 
+    test('AlarmsState#addAlarm id generation', () async {
+      SharedPreferences.setMockInitialValues({
+        AlarmsState.alarmsKey: null,
+        AlarmsState.nextAlarmIdKey: null,
+      });
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final initialState = AlarmsState(sharedPreferences);
+
+      final newAlarm0 = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "0", true);
+      await initialState.addAlarm(newAlarm0);
+      // check alarm id
+      expect(newAlarm0.id, equals(0));
+      expect(initialState.alarmsCount, equals(1));
+
+      final newAlarm1 = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "1", true);
+      await initialState.addAlarm(newAlarm1);
+      // check alarm id
+      expect(newAlarm1.id, equals(1));
+      expect(initialState.alarmsCount, equals(2));
+
+      final newAlarm2 = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "2", true);
+      await initialState.addAlarm(newAlarm2);
+      // check alarm id
+      expect(newAlarm2.id, equals(2));
+      expect(initialState.alarmsCount, equals(3));
+
+      // reloading alarms from sharedPreferences
+      final updatedState = AlarmsState(sharedPreferences);
+      expect(updatedState.alarmsCount, equals(3));
+
+      expect(updatedState.alarms[0].id, equals(0));
+      expect(updatedState.alarms[1].id, equals(1));
+      expect(updatedState.alarms[2].id, equals(2));
+    });
+
     test('AlarmsState#deleteAlarm deletes and persists alarms', () async {
       SharedPreferences.setMockInitialValues({AlarmsState.alarmsKey: alarmsJson});
 

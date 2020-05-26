@@ -20,8 +20,7 @@ class AlarmsState extends ChangeNotifier {
 
   AlarmsState(this.sharedPreferences) {
     _alarmManager = AlarmManager.getInstance();
-    _alarms = sharedPreferences
-        .getStringList(alarmsKey)
+    _alarms = (sharedPreferences.getStringList(alarmsKey) ?? <String>[])
         .map((a) => json.decode(a))
         .map((a) => Alarm.fromJson(a))
         .toList();
