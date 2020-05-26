@@ -32,6 +32,14 @@ class _AlarmTileState extends State<AlarmTile> {
   _AlarmTileState(this._alarmIndex);
 
   @override
+  void didUpdateWidget(AlarmTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Bug fix. Reset alarm tiles states
+    // on every alarms list re-render.
+    _changeTileState(TileState.DEFAULT);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<AlarmsState>(
       builder: (BuildContext context, AlarmsState state, _) {
