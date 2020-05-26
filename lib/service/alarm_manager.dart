@@ -14,6 +14,10 @@ class AlarmManager {
         rescheduleOnReboot: true);
   }
 
+  static Future<void> cancel(Alarm alarm) async {
+    AndroidAlarmManager.cancel(alarm.id);
+  }
+
   static void _callback(int id) {
     print("Alarm $id fired");
   }
