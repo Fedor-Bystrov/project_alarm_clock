@@ -1,10 +1,10 @@
-import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/state/alarms.dart';
+import 'package:projectbudy/service/alarm_manager.dart';
 import 'package:projectbudy/widget/appbar/edit_alarm.dart';
 import 'package:projectbudy/widget/body/add_alarm.dart';
 import 'package:projectbudy/widget/navbar/bottom.dart';
@@ -32,22 +32,8 @@ class AddAlarmScreen extends StatelessWidget {
     );
   }
 
-  // TODO
-  //  1. extract to Service
-
   Future<void> addAlarm(BuildContext context, Alarm alarm) async {
+    AlarmManager.addAlarm(alarm);
     Provider.of<AlarmsState>(context, listen: false).addAlarm(alarm);
-    AndroidAlarmManager.oneShotAt(
-        // TODO don't fire immediately  after creation
-        alarm.time,
-        1, // TODO Track alarm Ids
-        callback,
-        exact: true,
-        wakeup: true,
-        rescheduleOnReboot: true);
-  }
-
-  static void callback(int id) {
-    print("Alarm $id fired");
   }
 }
