@@ -20,6 +20,7 @@ class AddAlarmBody extends StatelessWidget {
         child: CupertinoDatePicker(
           mode: CupertinoDatePickerMode.time,
           use24hFormat: is24hFormat(context),
+          initialDateTime: alarm.time,
           onDateTimeChanged: (DateTime value) {
             alarm.time = value;
           },
