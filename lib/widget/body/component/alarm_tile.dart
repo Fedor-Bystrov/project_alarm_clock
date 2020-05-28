@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/screen/edit_alarm.dart';
 import 'package:projectbudy/state/alarms.dart';
 import 'alarm_tile/edit_btn.dart';
@@ -18,20 +19,20 @@ enum TileState {
 }
 
 class AlarmTile extends StatefulWidget {
-  final int _alarmIndex;
+  final Alarm _alarm;
 
-  AlarmTile(this._alarmIndex);
+  AlarmTile(this._alarm);
 
   @override
-  _AlarmTileState createState() => _AlarmTileState(_alarmIndex);
+  _AlarmTileState createState() => _AlarmTileState(_alarm);
 }
 
 class _AlarmTileState extends State<AlarmTile> {
   TileState _tileState = TileState.DEFAULT;
 
-  final int _alarmIndex;
+  final Alarm _alarm;
 
-  _AlarmTileState(this._alarmIndex);
+  _AlarmTileState(this._alarm);
 
   @override
   void didUpdateWidget(AlarmTile oldWidget) {
@@ -44,17 +45,16 @@ class _AlarmTileState extends State<AlarmTile> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AlarmsState>(
-      builder: (BuildContext context, AlarmsState state, _) {
-        final alarm = state.alarms[_alarmIndex];
+      builder: (BuildContext context, AlarmsState alarmsState, _) {
         final focusNode = Focus.of(context);
         final currentState = focusNode.hasFocus ? _tileState : TileState.DEFAULT;
         return GestureDetector(
           child: ListTile(
-            enabled: alarm.enabled,
-            title: AlarmTileTitle(alarm),
-            subtitle: AlarmTileSubtitle(alarm),
-            leading: getLeading(context, currentState, _alarmIndex),
-            trailing: getTrailing(state, _alarmIndex, currentState, context),
+            enabled: _alarm.enabled,
+            title: AlarmTileTitle(_alarm),
+            subtitle: AlarmTileSubtitle(_alarm),
+            leading: getLeading(context, currentState),
+            trailing: getTrailing(context, alarmsState, currentState),
           ),
           onHorizontalDragEnd: (d) => _onDragUpdate(d, focusNode),
           onTap: () => _onTap(focusNode),
@@ -98,42 +98,41 @@ class _AlarmTileState extends State<AlarmTile> {
       });
     }
   }
-}
 
-Widget getLeading(BuildContext context, TileState tileState, int alarmIndex) {
-  return tileState != TileState.EDIT
-      ? null
-      : AlarmTileEditBtn(
-          onPressed: () => Navigator.pushNamed(
-            context,
-            EditAlarmScreen.id,
-            arguments: {
-              'alarmIndex': alarmIndex,
-            },
-          ),
-        );
-}
-
-Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState, BuildContext context) {
-  final alarm = state.alarms[alarmIndex];
-  switch (tileState) {
-    case TileState.DEFAULT:
-      return AlarmTileSwitch(
-        enabled: alarm.enabled,
-        onChanged: (val) => state.switchAlarm(alarmIndex, val),
-      );
-    case TileState.DELETE:
-      return AlarmTileDeleteBtn(
-        onPressed: () async {
-          final deletedAlarm = state.alarms[alarmIndex];
-          await state.deleteAlarm(alarmIndex);
-          UndoSnackBar.show(
-            context: context,
-            onPressed: () => state.addAlarm(deletedAlarm),
+  Widget getLeading(BuildContext context, TileState currentState) {
+    return currentState != TileState.EDIT
+        ? null
+        : AlarmTileEditBtn(
+            onPressed: () => Navigator.pushNamed(
+              context,
+              EditAlarmScreen.id,
+              arguments: {
+                'alarm': _alarm,
+              },
+            ),
           );
-        },
-      );
-    default:
-      return null;
+  }
+
+  Widget getTrailing(BuildContext context, AlarmsState alarmsState, TileState currentState) {
+    switch (currentState) {
+      case TileState.DEFAULT:
+        return AlarmTileSwitch(
+          enabled: _alarm.enabled,
+          onChanged: (val) async => await alarmsState.switchAlarm(_alarm, val),
+        );
+      case TileState.DELETE:
+        return AlarmTileDeleteBtn(
+          onPressed: () async {
+            final deletedAlarm = _alarm;
+            await alarmsState.deleteAlarm(_alarm);
+            UndoSnackBar.show(
+              context: context,
+              onPressed: () => alarmsState.addAlarm(deletedAlarm),
+            );
+          },
+        );
+      default:
+        return null;
+    }
   }
 }
