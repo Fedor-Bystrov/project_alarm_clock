@@ -119,7 +119,8 @@ Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState, Build
       );
     case TileState.DELETE:
       return AlarmTileDeleteBtn(
-        onPressed: () {
+        onPressed: () async {
+          final deletedAlarm = state.alarms[alarmIndex];
           state.deleteAlarm(alarmIndex);
           Scaffold.of(context).showSnackBar(SnackBar(
             content: const Text("Alarm deleted"), // TODO translation
@@ -127,7 +128,7 @@ Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState, Build
             backgroundColor: CommonColors.snackbarSurface,
             action: SnackBarAction(
               onPressed: () {
-                print("undo");
+                state.addAlarm(deletedAlarm);
               },
               label: "UNDO", // TODO translation
               textColor: CommonColors.snackbarAction,
