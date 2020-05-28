@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projectbudy/util/colors.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/state/alarms.dart';
@@ -9,6 +8,7 @@ import 'alarm_tile/switch.dart';
 import 'alarm_tile/delete_btn.dart';
 import 'alarm_tile/subtitle.dart';
 import 'alarm_tile/title.dart';
+import 'undo_snackbar.dart';
 
 enum TileState {
   DEFAULT,
@@ -121,19 +121,11 @@ Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState, Build
       return AlarmTileDeleteBtn(
         onPressed: () async {
           final deletedAlarm = state.alarms[alarmIndex];
-          state.deleteAlarm(alarmIndex);
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: const Text("Alarm deleted"), // TODO translation
-            duration: Duration(seconds: 10),
-            backgroundColor: CommonColors.snackbarSurface,
-            action: SnackBarAction(
-              onPressed: () {
-                state.addAlarm(deletedAlarm);
-              },
-              label: "UNDO", // TODO translation
-              textColor: CommonColors.snackbarAction,
-            ),
-          ));
+          await state.deleteAlarm(alarmIndex);
+          UndoSnackBar.show(
+            context: context,
+            onPressed: () => state.addAlarm(deletedAlarm),
+          );
         },
       );
     default:
