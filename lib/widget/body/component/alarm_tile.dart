@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:projectbudy/screen/edit_alarm.dart';
 import 'package:projectbudy/state/alarms.dart';
 import 'alarm_tile/edit_btn.dart';
 import 'alarm_tile/switch.dart';
@@ -52,7 +53,7 @@ class _AlarmTileState extends State<AlarmTile> {
             enabled: alarm.enabled,
             title: AlarmTileTitle(alarm),
             subtitle: AlarmTileSubtitle(alarm),
-            leading: getLeading(state, _alarmIndex, currentState),
+            leading: getLeading(context, currentState, _alarmIndex),
             trailing: getTrailing(state, _alarmIndex, currentState, context),
           ),
           onHorizontalDragEnd: (d) => _onDragUpdate(d, focusNode),
@@ -99,13 +100,17 @@ class _AlarmTileState extends State<AlarmTile> {
   }
 }
 
-Widget getLeading(AlarmsState state, int alarmIndex, TileState tileState) {
+Widget getLeading(BuildContext context, TileState tileState, int alarmIndex) {
   return tileState != TileState.EDIT
       ? null
       : AlarmTileEditBtn(
-          onPressed: () {
-            print("boo");
-          },
+          onPressed: () => Navigator.pushNamed(
+            context,
+            EditAlarmScreen.id,
+            arguments: {
+              'alarmIndex': alarmIndex,
+            },
+          ),
         );
 }
 

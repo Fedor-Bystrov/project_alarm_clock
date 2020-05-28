@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectbudy/screen/edit_alarm.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +31,7 @@ class Application extends StatelessWidget {
           routes: {
             AlarmsScreen.id: (context) => AlarmsScreen(),
             AddAlarmScreen.id: (context) => AddAlarmScreen(),
+            EditAlarmScreen.id: (context) => EditAlarmScreen(),
           },
         ),
       ),
