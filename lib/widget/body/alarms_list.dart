@@ -20,6 +20,6 @@ class AlarmsList extends StatelessWidget {
   }
 
   static Iterable<Widget> getAlarmTiles(AlarmsState state) {
-    return Iterable<int>.generate(state.alarms.length).map((idx) => Focus(child: AlarmTile(idx)));
+    return state.alarms.map((alarm) => Focus(child: AlarmTile(alarm)));
   }
 }
