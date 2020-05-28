@@ -15,9 +15,6 @@ class AlarmsState extends ChangeNotifier {
   AlarmManager _alarmManager;
   List<Alarm> _alarms;
 
-  // TODO
-  //  1. Edit alarm
-
   AlarmsState(this.sharedPreferences) {
     _alarmManager = AlarmManager.getInstance();
     _alarms = (sharedPreferences.getStringList(alarmsKey) ?? <String>[])
