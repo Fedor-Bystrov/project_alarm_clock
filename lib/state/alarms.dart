@@ -59,7 +59,7 @@ class AlarmsState extends ChangeNotifier {
     await persistAndNotify();
   }
 
-  void switchAlarm(Alarm alarm, bool value) { // TODO disable job
+  void switchAlarm(Alarm alarm, bool value) { // TODO disable alarm job
     alarm.enabled = value;
     persistAndNotify();
   }
