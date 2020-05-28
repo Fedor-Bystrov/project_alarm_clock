@@ -13,7 +13,7 @@ class AddAlarmScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var alarmsState = Provider.of<AlarmsState>(context, listen: false);
+    var alarmsState = Provider.of<AlarmsState>(context);
     var alarm = Alarm(DateTime.now(), null, "Alarm", true);
     return Scaffold(
       appBar: EditAlarmAppBar(
