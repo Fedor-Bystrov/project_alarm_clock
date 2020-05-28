@@ -5,21 +5,28 @@ import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/util/colors.dart';
 import 'package:projectbudy/util/utils.dart';
 
-class AddAlarmBody extends ListView {
-  AddAlarmBody({@required BuildContext context, @required Alarm alarm})
-      : super(
-            children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height / 4,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.time,
-              use24hFormat: is24hFormat(context),
-              onDateTimeChanged: (DateTime value) {
-                alarm.time = value;
-              },
-            ),
-          ),
-        ]..addAll(_getAlarmModifiers(context)));
+class AddAlarmBody extends StatelessWidget {
+  final BuildContext context;
+  final Alarm alarm;
+
+  AddAlarmBody({@required this.context, @required this.alarm});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+        children: <Widget>[
+      Container(
+        height: MediaQuery.of(context).size.height / 4,
+        child: CupertinoDatePicker(
+          mode: CupertinoDatePickerMode.time,
+          use24hFormat: is24hFormat(context),
+          onDateTimeChanged: (DateTime value) {
+            alarm.time = value;
+          },
+        ),
+      ),
+    ]..addAll(_getAlarmModifiers(context)));
+  }
 
   static Iterable<Widget> _getAlarmModifiers(BuildContext context) {
     return ListTile.divideTiles(
