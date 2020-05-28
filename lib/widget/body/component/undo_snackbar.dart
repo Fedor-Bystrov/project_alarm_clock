@@ -11,7 +11,7 @@ class UndoSnackBar extends SnackBar {
   UndoSnackBar._({this.onPressed})
       : super(
           content: const Text("Alarm deleted"), // TODO translation
-          duration: Duration(seconds: 10),
+          duration: Duration(seconds: 5),
           backgroundColor: CommonColors.snackbarSurface,
           action: SnackBarAction(
             onPressed: onPressed,
