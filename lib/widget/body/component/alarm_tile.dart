@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projectbudy/util/colors.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/state/alarms.dart';
@@ -52,7 +53,7 @@ class _AlarmTileState extends State<AlarmTile> {
             title: AlarmTileTitle(alarm),
             subtitle: AlarmTileSubtitle(alarm),
             leading: getLeading(state, _alarmIndex, currentState),
-            trailing: getTrailing(state, _alarmIndex, currentState),
+            trailing: getTrailing(state, _alarmIndex, currentState, context),
           ),
           onHorizontalDragEnd: (d) => _onDragUpdate(d, focusNode),
           onTap: () => _onTap(focusNode),
@@ -108,7 +109,7 @@ Widget getLeading(AlarmsState state, int alarmIndex, TileState tileState) {
         );
 }
 
-Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState) {
+Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState, BuildContext context) {
   final alarm = state.alarms[alarmIndex];
   switch (tileState) {
     case TileState.DEFAULT:
@@ -118,7 +119,21 @@ Widget getTrailing(AlarmsState state, int alarmIndex, TileState tileState) {
       );
     case TileState.DELETE:
       return AlarmTileDeleteBtn(
-        onPressed: () => state.deleteAlarm(alarmIndex),
+        onPressed: () {
+          state.deleteAlarm(alarmIndex);
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: const Text("Alarm deleted"), // TODO translation
+            action: SnackBarAction(
+              onPressed: () {
+                print("undo");
+              },
+              label: "UNDO", // TODO translation
+              textColor: CommonColors.snackbarAction,
+            ),
+            duration: Duration(seconds: 15),
+            elevation: 20.0,
+          ));
+        },
       );
     default:
       return null;
