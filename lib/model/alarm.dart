@@ -9,7 +9,7 @@ class Alarm {
 
   Alarm.copy(Alarm alarm) {
     this.id = alarm.id;
-    this.time = this.time;
+    this.time = alarm.time;
     this.repeat = alarm.repeat;
     this.label = alarm.label;
     this.enabled = alarm.enabled;

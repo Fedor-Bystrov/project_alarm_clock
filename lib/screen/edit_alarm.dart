@@ -12,7 +12,7 @@ class EditAlarmScreen extends StatelessWidget {
   static const String id = 'edit_alarm';
 
   @override
-  Widget build(BuildContext context) { // TODO баг при изменении даты на 1, не рендерится апдейт
+  Widget build(BuildContext context) {
     final state = Provider.of<AlarmsState>(context);
     final Map<String, Alarm> arguments = ModalRoute.of(context).settings.arguments;
     final Alarm initial = arguments['alarm'];
