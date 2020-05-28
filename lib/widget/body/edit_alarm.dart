@@ -5,11 +5,11 @@ import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/util/colors.dart';
 import 'package:projectbudy/util/utils.dart';
 
-class AddAlarmBody extends StatelessWidget {
+class EditAlarmBody extends StatelessWidget {
   final BuildContext context;
   final Alarm alarm;
 
-  AddAlarmBody({@required this.context, @required this.alarm});
+  EditAlarmBody({@required this.context, @required this.alarm});
 
   @override
   Widget build(BuildContext context) {

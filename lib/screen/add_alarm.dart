@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:projectbudy/model/alarm.dart';
 import 'package:projectbudy/state/alarms.dart';
 import 'package:projectbudy/widget/appbar/edit_alarm.dart';
-import 'package:projectbudy/widget/body/add_alarm.dart';
+import 'package:projectbudy/widget/body/edit_alarm.dart';
 import 'package:projectbudy/widget/navbar/bottom.dart';
 
 class AddAlarmScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class AddAlarmScreen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: BottomNavBar(),
-      body: AddAlarmBody(
+      body: EditAlarmBody(
         context: context,
         alarm: alarm,
       ),
