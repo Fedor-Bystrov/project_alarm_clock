@@ -7,6 +7,14 @@ class Alarm {
 
   Alarm(this.time, this.repeat, this.label, this.enabled);
 
+  Alarm.copy(Alarm alarm) {
+    this.id = alarm.id;
+    this.time = this.time;
+    this.repeat = alarm.repeat;
+    this.label = alarm.label;
+    this.enabled = alarm.enabled;
+  }
+
   Alarm.fromJson(Map<String, dynamic> json)
       : time = DateTime.parse(json['time']),
         repeat = json['repeat'],
