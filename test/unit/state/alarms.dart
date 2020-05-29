@@ -95,7 +95,9 @@ void main() async {
       expect(newAlarm.id, equals(nextAlarmId));
       expect(initialState.alarmsCount, equals(expectedAlarms.length + 1));
 
-      expectedAlarms..add(newAlarm)..sort((a, b) => a.time.compareTo(b.time));
+      expectedAlarms
+        ..add(newAlarm)
+        ..sort((a, b) => a.time.compareTo(b.time));
       expect(initialState.alarms.toList(), equals(expectedAlarms));
 
       // reloading alarms from sharedPreferences
@@ -190,6 +192,51 @@ void main() async {
       expect(state.alarmsCount, equals(0));
     });
 
-    // TODO Тест на сортировку
+    test('AlarmsState test alarms sorting', () async {
+      SharedPreferences.setMockInitialValues({
+        AlarmsState.alarmsKey: null,
+        AlarmsState.nextAlarmIdKey: null,
+      });
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final initialState = AlarmsState(sharedPreferences);
+
+      final newAlarm0 = Alarm(DateTime.parse("2000-01-01 01:01:02"), "Mon Wed Fri", "0", true);
+      final newAlarm1 = Alarm(DateTime.parse("2000-01-01 01:01:03"), "M2on W11ed Fri", "1", false);
+      final newAlarm2 = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon W11ed Fri", "2", true);
+      final newAlarm3 = Alarm(DateTime.parse("2000-01-01 00:00:00"), "Mon We34d Fri", "3", false);
+
+      await initialState.addAlarm(newAlarm0);
+      await initialState.addAlarm(newAlarm3);
+      await initialState.addAlarm(newAlarm1);
+      await initialState.addAlarm(newAlarm2);
+
+      expect(initialState.alarmsCount, equals(4));
+
+      var alarms = initialState.alarms.toList();
+      expect(alarms[0], equals(newAlarm3));
+      expect(alarms[1], equals(newAlarm2));
+      expect(alarms[2], equals(newAlarm0));
+      expect(alarms[3], equals(newAlarm1));
+
+      expect(alarms[0].id, equals(1));
+      expect(alarms[1].id, equals(3));
+      expect(alarms[2].id, equals(0));
+      expect(alarms[3].id, equals(2));
+
+      // reloading alarms from sharedPreferences
+      final updatedState = AlarmsState(sharedPreferences);
+      expect(updatedState.alarmsCount, equals(4));
+
+      alarms = updatedState.alarms.toList();
+      expect(alarms[0], equals(newAlarm3));
+      expect(alarms[1], equals(newAlarm2));
+      expect(alarms[2], equals(newAlarm0));
+      expect(alarms[3], equals(newAlarm1));
+
+      expect(alarms[0].id, equals(1));
+      expect(alarms[1].id, equals(3));
+      expect(alarms[2].id, equals(0));
+      expect(alarms[3].id, equals(2));
+    });
   });
 }
