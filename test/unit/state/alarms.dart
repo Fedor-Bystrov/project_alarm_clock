@@ -1,6 +1,6 @@
-import 'dart:collection';
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter_test/flutter_test.dart' as ft;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/test.dart';
@@ -39,7 +39,7 @@ void main() async {
       expect(alarmsState.alarmsCount, equals(expectedAlarms.length));
       expect(alarmsState.alarms.length, equals(expectedAlarms.length));
       expect(alarmsState.alarms, equals(expectedAlarms));
-      expect(alarmsState.alarms is UnmodifiableListView<Alarm>, equals(true));
+      expect(alarmsState.alarms is UnmodifiableSetView<Alarm>, equals(true));
     });
 
     test('AlarmsState#switchAlarm disables/enables alarms', () async {
@@ -47,27 +47,31 @@ void main() async {
 
       final sharedPreferences = await SharedPreferences.getInstance();
       final initialAlarmsState = AlarmsState(sharedPreferences);
-      final expectedAlarms = parseAlarms(alarmsJson);
+      final expectedAlarms = parseAlarms(alarmsJson)..sort((a, b) => a.time.compareTo(b.time));
 
-      expect(initialAlarmsState.alarms[0].enabled, equals(expectedAlarms[0].enabled));
-      expect(initialAlarmsState.alarms[1].enabled, equals(expectedAlarms[1].enabled));
-      expect(initialAlarmsState.alarms[2].enabled, equals(expectedAlarms[2].enabled));
+      var alarms = initialAlarmsState.alarms.toList();
+      expect(alarms[0].enabled, equals(expectedAlarms[0].enabled));
+      expect(alarms[1].enabled, equals(expectedAlarms[1].enabled));
+      expect(alarms[2].enabled, equals(expectedAlarms[2].enabled));
 
       // inverting alarm enabled property
       for (var i = 0; i < initialAlarmsState.alarms.length; i++) {
-        initialAlarmsState.switchAlarm(i, !initialAlarmsState.alarms[i].enabled);
+        initialAlarmsState.switchAlarm(alarms[i], !alarms[i].enabled);
       }
 
-      expect(initialAlarmsState.alarms[0].enabled, equals(!expectedAlarms[0].enabled));
-      expect(initialAlarmsState.alarms[1].enabled, equals(!expectedAlarms[1].enabled));
-      expect(initialAlarmsState.alarms[2].enabled, equals(!expectedAlarms[2].enabled));
+      alarms = initialAlarmsState.alarms.toList();
+      expect(alarms[0].enabled, equals(!expectedAlarms[0].enabled));
+      expect(alarms[1].enabled, equals(!expectedAlarms[1].enabled));
+      expect(alarms[2].enabled, equals(!expectedAlarms[2].enabled));
 
       // checking that enabled property was persisted
       final updatedAlarmsState = AlarmsState(sharedPreferences);
 
-      expect(updatedAlarmsState.alarms[0].enabled, equals(!expectedAlarms[0].enabled));
-      expect(updatedAlarmsState.alarms[1].enabled, equals(!expectedAlarms[1].enabled));
-      expect(updatedAlarmsState.alarms[2].enabled, equals(!expectedAlarms[2].enabled));
+      alarms = updatedAlarmsState.alarms.toList();
+
+      expect(alarms[0].enabled, equals(!expectedAlarms[0].enabled));
+      expect(alarms[1].enabled, equals(!expectedAlarms[1].enabled));
+      expect(alarms[2].enabled, equals(!expectedAlarms[2].enabled));
     });
 
     test('AlarmsState#addAlarm adds and persists an alarm', () async {
@@ -79,9 +83,9 @@ void main() async {
 
       final sharedPreferences = await SharedPreferences.getInstance();
       final initialState = AlarmsState(sharedPreferences);
-      final expectedAlarms = parseAlarms(alarmsJson);
+      final expectedAlarms = parseAlarms(alarmsJson)..sort((a, b) => a.time.compareTo(b.time));
 
-      expect(initialState.alarms, equals(expectedAlarms));
+      expect(initialState.alarms.toList(), equals(expectedAlarms));
 
       final newAlarm = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "Alala", true);
 
@@ -91,12 +95,12 @@ void main() async {
       expect(newAlarm.id, equals(nextAlarmId));
       expect(initialState.alarmsCount, equals(expectedAlarms.length + 1));
 
-      expectedAlarms.add(newAlarm);
-      expect(initialState.alarms, equals(expectedAlarms));
+      expectedAlarms..add(newAlarm)..sort((a, b) => a.time.compareTo(b.time));
+      expect(initialState.alarms.toList(), equals(expectedAlarms));
 
       // reloading alarms from sharedPreferences
       final updatedState = AlarmsState(sharedPreferences);
-      expect(updatedState.alarms, equals(expectedAlarms));
+      expect(updatedState.alarms.toList(), equals(expectedAlarms));
     });
 
     test('AlarmsState#addAlarm id generation', () async {
@@ -113,13 +117,13 @@ void main() async {
       expect(newAlarm0.id, equals(0));
       expect(initialState.alarmsCount, equals(1));
 
-      final newAlarm1 = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "1", true);
+      final newAlarm1 = Alarm(DateTime.parse("2000-01-01 01:01:02"), "Mon Wed Fri", "1", true);
       await initialState.addAlarm(newAlarm1);
       // check alarm id
       expect(newAlarm1.id, equals(1));
       expect(initialState.alarmsCount, equals(2));
 
-      final newAlarm2 = Alarm(DateTime.parse("2000-01-01 01:01:01"), "Mon Wed Fri", "2", true);
+      final newAlarm2 = Alarm(DateTime.parse("2000-01-01 01:01:03"), "Mon Wed Fri", "2", true);
       await initialState.addAlarm(newAlarm2);
       // check alarm id
       expect(newAlarm2.id, equals(2));
@@ -129,9 +133,10 @@ void main() async {
       final updatedState = AlarmsState(sharedPreferences);
       expect(updatedState.alarmsCount, equals(3));
 
-      expect(updatedState.alarms[0].id, equals(0));
-      expect(updatedState.alarms[1].id, equals(1));
-      expect(updatedState.alarms[2].id, equals(2));
+      final alarms = updatedState.alarms.toList();
+      expect(alarms[0].id, equals(0));
+      expect(alarms[1].id, equals(1));
+      expect(alarms[2].id, equals(2));
     });
 
     test('AlarmsState#deleteAlarm deletes and persists alarms', () async {
@@ -139,38 +144,43 @@ void main() async {
 
       final sharedPreferences = await SharedPreferences.getInstance();
       var state = AlarmsState(sharedPreferences);
-      final expectedAlarms = parseAlarms(alarmsJson);
+      final expectedAlarms = parseAlarms(alarmsJson)..sort((a, b) => a.time.compareTo(b.time));
+      var alarms = state.alarms.toList();
 
-      expect(state.alarms, equals(expectedAlarms));
+      expect(alarms, equals(expectedAlarms));
 
       // delete last alarm
-      await state.deleteAlarm(state.alarmsCount - 1);
+      await state.deleteAlarm(alarms[state.alarmsCount - 1]);
 
+      alarms = state.alarms.toList();
       expect(state.alarmsCount, equals(2));
-      expect(state.alarms[0], equals(expectedAlarms[0]));
-      expect(state.alarms[1], equals(expectedAlarms[1]));
+      expect(alarms[0], equals(expectedAlarms[0]));
+      expect(alarms[1], equals(expectedAlarms[1]));
 
       // reloading alarms from sharedPreferences
       state = AlarmsState(sharedPreferences);
 
+      alarms = state.alarms.toList();
       expect(state.alarmsCount, equals(2));
-      expect(state.alarms[0], equals(expectedAlarms[0]));
-      expect(state.alarms[1], equals(expectedAlarms[1]));
+      expect(alarms[0], equals(expectedAlarms[0]));
+      expect(alarms[1], equals(expectedAlarms[1]));
 
       // delete one more alarm
-      await state.deleteAlarm(state.alarmsCount - 1);
+      await state.deleteAlarm(alarms[state.alarmsCount - 1]);
 
+      alarms = state.alarms.toList();
       expect(state.alarmsCount, equals(1));
-      expect(state.alarms[0], equals(expectedAlarms[0]));
+      expect(alarms[0], equals(expectedAlarms[0]));
 
       // reloading alarms from sharedPreferences
       state = AlarmsState(sharedPreferences);
 
+      alarms = state.alarms.toList();
       expect(state.alarmsCount, equals(1));
-      expect(state.alarms[0], equals(expectedAlarms[0]));
+      expect(alarms[0], equals(expectedAlarms[0]));
 
       // delete last alarm
-      await state.deleteAlarm(state.alarmsCount - 1);
+      await state.deleteAlarm(alarms[state.alarmsCount - 1]);
 
       expect(state.alarmsCount, equals(0));
 
@@ -179,5 +189,7 @@ void main() async {
 
       expect(state.alarmsCount, equals(0));
     });
+
+    // TODO Тест на сортировку
   });
 }
