@@ -18,4 +18,8 @@ class AlarmsListState extends ChangeNotifier {
     _currentStatus = value;
     notifyListeners();
   }
+
+  bool isDefault() {
+    return _currentStatus == AlarmsListStatus.DEFAULT;
+  }
 }
