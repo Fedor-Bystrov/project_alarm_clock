@@ -16,7 +16,7 @@ class AddAlarmScreen extends StatelessWidget {
     var alarmsState = Provider.of<AlarmsState>(context);
     var alarm = Alarm(DateTime.now(), null, "Alarm", true);
     return Scaffold(
-      appBar: EditAlarmAppBar(
+      appBar: EditAlarmAppBar.newAppBar(
         context: context,
         title: const Text("Add Alarm"), // TODO translation
         onPressed: () async {

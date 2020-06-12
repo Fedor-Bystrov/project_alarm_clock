@@ -18,7 +18,7 @@ class EditAlarmScreen extends StatelessWidget {
     final Alarm initial = arguments['alarm'];
     final Alarm updated = Alarm.copy(initial);
     return Scaffold(
-      appBar: EditAlarmAppBar(
+      appBar: EditAlarmAppBar.newAppBar(
           context: context,
           title: const Text("Edit Alarm"), // TODO translation
           onPressed: () async {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:projectbudy/util/colors.dart';
 
-class AlarmsAppBar extends AppBar {
+class AlarmsAppBar {
   AlarmsAppBar._();
 
   static AppBar newAppBar({@required VoidCallback onPressed}) {
