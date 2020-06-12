@@ -5,7 +5,6 @@ import 'package:projectbudy/util/colors.dart';
 class AlarmTileEditBtn extends StatelessWidget {
   final VoidCallback onPressed;
 
-  // TODO change according to design
   AlarmTileEditBtn({@required this.onPressed});
 
   @override
