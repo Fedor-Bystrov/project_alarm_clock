@@ -18,24 +18,24 @@ enum TileState {
   DELETE,
 }
 
-class AlarmTile extends StatefulWidget {
+class DefaultAlarmTile extends StatefulWidget {
   final Alarm _alarm;
 
-  AlarmTile(this._alarm);
+  DefaultAlarmTile(this._alarm);
 
   @override
-  _AlarmTileState createState() => _AlarmTileState(_alarm);
+  _DefaultAlarmTileState createState() => _DefaultAlarmTileState(_alarm);
 }
 
-class _AlarmTileState extends State<AlarmTile> {
+class _DefaultAlarmTileState extends State<DefaultAlarmTile> {
   TileState _tileState = TileState.NORMAL;
 
   final Alarm _alarm;
 
-  _AlarmTileState(this._alarm);
+  _DefaultAlarmTileState(this._alarm);
 
   @override
-  void didUpdateWidget(AlarmTile oldWidget) {
+  void didUpdateWidget(DefaultAlarmTile oldWidget) {
     super.didUpdateWidget(oldWidget);
     // Bug fix. Reset alarm tiles states
     // on every alarms list re-render.

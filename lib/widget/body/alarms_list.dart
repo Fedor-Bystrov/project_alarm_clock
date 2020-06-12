@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/model/alarm.dart';
-import 'package:projectbudy/widget/body/component/alarm_tile.dart';
+import 'package:projectbudy/widget/body/component/default_alarm_tile.dart';
 import 'package:projectbudy/state/alarms.dart';
 
 class AlarmsList extends StatelessWidget {
@@ -21,6 +21,6 @@ class AlarmsList extends StatelessWidget {
   }
 
   static Iterable<Widget> getAlarmTiles(AlarmsState state) {
-    return state.alarms.map((alarm) => Focus(key: ValueKey<Alarm>(alarm), child: AlarmTile(alarm)));
+    return state.alarms.map((alarm) => Focus(key: ValueKey<Alarm>(alarm), child: DefaultAlarmTile(alarm)));
   }
 }
