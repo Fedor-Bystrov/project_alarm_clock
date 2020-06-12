@@ -13,7 +13,7 @@ import 'alarm_tile/title.dart';
 import 'undo_snackbar.dart';
 
 enum TileState {
-  DEFAULT,
+  NORMAL,
   EDIT,
   DELETE,
 }
@@ -28,7 +28,7 @@ class AlarmTile extends StatefulWidget {
 }
 
 class _AlarmTileState extends State<AlarmTile> {
-  TileState _tileState = TileState.DEFAULT;
+  TileState _tileState = TileState.NORMAL;
 
   final Alarm _alarm;
 
@@ -39,7 +39,7 @@ class _AlarmTileState extends State<AlarmTile> {
     super.didUpdateWidget(oldWidget);
     // Bug fix. Reset alarm tiles states
     // on every alarms list re-render.
-    _changeTileState(TileState.DEFAULT);
+    _changeTileState(TileState.NORMAL);
   }
 
   @override
@@ -47,7 +47,7 @@ class _AlarmTileState extends State<AlarmTile> {
     return Consumer<AlarmsState>(
       builder: (BuildContext context, AlarmsState alarmsState, _) {
         final focusNode = Focus.of(context);
-        final currentState = focusNode.hasFocus ? _tileState : TileState.DEFAULT;
+        final currentState = focusNode.hasFocus ? _tileState : TileState.NORMAL;
         return GestureDetector(
           child: ListTile(
             enabled: _alarm.enabled,
@@ -68,7 +68,7 @@ class _AlarmTileState extends State<AlarmTile> {
     // swipe right
     if (details.primaryVelocity > 0) {
       if (_tileState == TileState.DELETE) {
-        _changeTileState(TileState.DEFAULT);
+        _changeTileState(TileState.NORMAL);
       } else {
         _changeTileState(TileState.EDIT);
       }
@@ -78,7 +78,7 @@ class _AlarmTileState extends State<AlarmTile> {
     // swipe left
     if (details.primaryVelocity < 0) {
       if (_tileState == TileState.EDIT) {
-        _changeTileState(TileState.DEFAULT);
+        _changeTileState(TileState.NORMAL);
       } else {
         _changeTileState(TileState.DELETE);
       }
@@ -88,7 +88,7 @@ class _AlarmTileState extends State<AlarmTile> {
 
   void _onTap(FocusNode focusNode) {
     focusNode.requestFocus();
-    _changeTileState(TileState.DEFAULT);
+    _changeTileState(TileState.NORMAL);
   }
 
   void _changeTileState(TileState desiredState) {
@@ -115,7 +115,7 @@ class _AlarmTileState extends State<AlarmTile> {
 
   Widget getTrailing(BuildContext context, AlarmsState alarmsState, TileState currentState) {
     switch (currentState) {
-      case TileState.DEFAULT:
+      case TileState.NORMAL:
         return AlarmTileSwitch(
           enabled: _alarm.enabled,
           onChanged: (val) async => await alarmsState.switchAlarm(_alarm, val),
