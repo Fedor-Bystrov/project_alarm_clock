@@ -15,7 +15,7 @@ class DoneButton extends StatelessWidget {
         Icons.done,
         color: CommonColors.accentColor,
       ),
-      onPressed: () => alarmsListState.currentStatus = AlarmsListStatus.DEFAULT,
+      onPressed: () => alarmsListState.setDefault(),
     );
   }
 }

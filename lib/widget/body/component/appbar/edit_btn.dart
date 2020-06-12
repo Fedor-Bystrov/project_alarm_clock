@@ -15,7 +15,7 @@ class EditButton extends StatelessWidget {
         Icons.edit,
         color: CommonColors.accentColor,
       ),
-      onPressed: () => alarmsListState.currentStatus = AlarmsListStatus.EDIT,
+      onPressed: () => alarmsListState.setEdit(),
     );
   }
 }

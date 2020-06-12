@@ -22,4 +22,12 @@ class AlarmsListState extends ChangeNotifier {
   bool isDefault() {
     return _currentStatus == AlarmsListStatus.DEFAULT;
   }
+
+  void setDefault() {
+    currentStatus = AlarmsListStatus.DEFAULT;
+  }
+
+  void setEdit() {
+    currentStatus = AlarmsListStatus.EDIT;
+  }
 }
