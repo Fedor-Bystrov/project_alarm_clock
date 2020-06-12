@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projectbudy/screen/edit_alarm.dart';
+import 'package:projectbudy/state/alarms_list.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 import 'package:projectbudy/screen/alarms.dart';
 import 'package:projectbudy/screen/add_alarm.dart';
@@ -19,6 +19,7 @@ class Application extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AlarmsState>(create: (_) => AlarmsState(sharedPreferences)),
+        ChangeNotifierProvider<AlarmsListState>(create: (_) => AlarmsListState()),
       ],
       child: FocusScope(
         child: MaterialApp(
