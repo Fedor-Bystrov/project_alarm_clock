@@ -10,10 +10,10 @@ class DoneButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      textColor: CommonColors.accentColor,
-      child: const Text(
-        "Done",
+    return IconButton(
+      icon: Icon(
+        Icons.done,
+        color: CommonColors.accentColor,
       ),
       onPressed: () => alarmsListState.currentStatus = AlarmsListStatus.DEFAULT,
     );
