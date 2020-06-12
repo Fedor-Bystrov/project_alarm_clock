@@ -20,7 +20,7 @@ class _AlarmsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AlarmsAppBar(onPressed: () async {
+      appBar: AlarmsAppBar.newAppBar(onPressed: () async {
         await Navigator.pushNamed(context, AddAlarmScreen.id);
         Focus.of(context).requestFocus();
       }),
