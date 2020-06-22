@@ -16,6 +16,7 @@ dependencies:
   provider: ^4.1.2
 
   intl: ^0.16.1  # internationalization, date formatting
+  flutter_i18n: ^0.16.2 # simpler internationalization
 
   # https://pub.dev/packages/android_alarm_manager
   android_alarm_manager: ">=0.4.0+0 <2.0.0"
