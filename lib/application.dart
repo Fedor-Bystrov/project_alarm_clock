@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:projectbudy/screen/edit_alarm.dart';
 import 'package:projectbudy/state/alarms_list.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,19 @@ class Application extends StatelessWidget {
       ],
       child: FocusScope(
         child: MaterialApp(
+          localizationsDelegates: [
+            FlutterI18nDelegate(
+              translationLoader: FileTranslationLoader(basePath: 'assets/i18n', useCountryCode: false),
+              missingTranslationHandler: (key, locale) {
+                print("--- Missing Key: $key, languageCode: ${locale.languageCode}"); // TODO error handling
+              },
+            ),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          supportedLocales: [
+            const Locale('en', '') // TODO add more locales
+          ],
           debugShowCheckedModeBanner: false,
           title: "Budy",
           theme: ThemeData(

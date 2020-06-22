@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 import 'package:projectbudy/util/colors.dart';
 
@@ -17,7 +18,7 @@ class EditAlarmAppBar {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.check),
-          tooltip: "Save alarm", // TODO translations
+          tooltip: FlutterI18n.translate(context, "test"),
           onPressed: onPressed,
         )
       ],
