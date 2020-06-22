@@ -15,6 +15,7 @@ class AlarmTileEditBtn extends StatelessWidget {
         shape: CircleBorder(),
       ),
       child: IconButton(
+        tooltip: "Edit alarm", // TODO translations
         icon: Icon(
           Icons.edit,
           color: CommonColors.primaryColor,

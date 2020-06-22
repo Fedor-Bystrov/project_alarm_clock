@@ -11,6 +11,7 @@ class DoneButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: "Save all alarms", // TODO translations
       icon: Icon(
         Icons.done,
         color: CommonColors.accentColor,

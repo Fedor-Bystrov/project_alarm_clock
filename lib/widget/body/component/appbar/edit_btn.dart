@@ -11,6 +11,7 @@ class EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: "Edit all alarms", // TODO translations
       icon: Icon(
         Icons.edit,
         color: CommonColors.accentColor,

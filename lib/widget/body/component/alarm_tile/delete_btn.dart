@@ -15,6 +15,7 @@ class AlarmTileDeleteBtn extends StatelessWidget {
         shape: CircleBorder(),
       ),
       child: IconButton(
+        tooltip: "Delete alarm", // TODO translations
         icon: Icon(
           Icons.delete_forever,
           color: CommonColors.primaryColor,
