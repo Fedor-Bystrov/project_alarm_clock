@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
+import 'package:flutter_i18n/loaders/decoders/yaml_decode_strategy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:projectbudy/screen/edit_alarm.dart';
 import 'package:projectbudy/state/alarms_list.dart';
@@ -32,7 +32,7 @@ class Application extends StatelessWidget {
                 basePath: 'assets/flutter_i18n',
                 fallbackFile: 'en',
                 useCountryCode: false,
-                decodeStrategies: [JsonDecodeStrategy()],
+                decodeStrategies: [YamlDecodeStrategy()],
               ),
               missingTranslationHandler: (key, locale) {
                 print(
