@@ -29,7 +29,8 @@ class Application extends StatelessWidget {
           localizationsDelegates: [
             FlutterI18nDelegate(
               translationLoader: FileTranslationLoader(
-                basePath: 'assets/i18n',
+                basePath: 'assets/flutter_i18n',
+                fallbackFile: 'en',
                 useCountryCode: false,
                 decodeStrategies: [JsonDecodeStrategy()],
               ),

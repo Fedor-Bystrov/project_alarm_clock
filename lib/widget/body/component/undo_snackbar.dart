@@ -13,12 +13,12 @@ class UndoSnackBar extends SnackBar {
 
   UndoSnackBar._({this.onPressed, this.context})
       : super(
-          content: I18nText("undo_snackbar.alarm_deleted.content"),
+          content: I18nText("undoSnackbarAlarmDeletedContent"),
           duration: Duration(seconds: 5),
           backgroundColor: CommonColors.snackbarSurface,
           action: SnackBarAction(
             onPressed: onPressed,
-            label: FlutterI18n.translate(context, "undo_snackbar.action.label"),
+            label: FlutterI18n.translate(context, "undoSnackbarActionLabel"),
             textColor: CommonColors.snackbarAction,
           ),
         );

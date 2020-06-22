@@ -18,7 +18,7 @@ class EditAlarmAppBar {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.check),
-          tooltip: FlutterI18n.translate(context, "appbar.edit_alarm.tooltip"),
+          tooltip: FlutterI18n.translate(context, "appbarEditAlarmTooltip"),
           onPressed: onPressed,
         )
       ],

@@ -19,7 +19,7 @@ class AddAlarmScreen extends StatelessWidget {
     return Scaffold(
       appBar: EditAlarmAppBar.newAppBar(
         context: context,
-        title: I18nText("screen.add_alarm.title"),
+        title: I18nText("screenAddAlarmTitle"),
         onPressed: () async {
           await alarmsState.addAlarm(alarm);
           Navigator.pop(context);

@@ -16,7 +16,7 @@ class AlarmTileDeleteBtn extends StatelessWidget {
         shape: CircleBorder(),
       ),
       child: IconButton(
-        tooltip: FlutterI18n.translate(context, "alarm_tile.delete_btn.tooltip"),
+        tooltip: FlutterI18n.translate(context, "alarmTileDeleteBtnTooltip"),
         icon: Icon(
           Icons.delete_forever,
           color: CommonColors.primaryColor,

@@ -12,7 +12,7 @@ class EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      tooltip: FlutterI18n.translate(context, "appbar.edit_btn.tooltip"),
+      tooltip: FlutterI18n.translate(context, "appbarEditBtnTooltip"),
       icon: Icon(
         Icons.edit,
         color: CommonColors.accentColor,

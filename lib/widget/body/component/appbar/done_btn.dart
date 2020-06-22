@@ -12,7 +12,7 @@ class DoneButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      tooltip: FlutterI18n.translate(context, "appbar.done_btn.tooltip"),
+      tooltip: FlutterI18n.translate(context, "appbarDoneBtnTooltip"),
       icon: Icon(
         Icons.done,
         color: CommonColors.accentColor,

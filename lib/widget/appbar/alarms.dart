@@ -17,13 +17,13 @@ class AlarmsAppBar {
     var state = Provider.of<AlarmsListState>(context);
     return AppBar(
       centerTitle: true,
-      title: I18nText('appbar.alarms.title'),
+      title: I18nText('appbarAlarmsTitle'),
       iconTheme: IconThemeData(color: CommonColors.accentColor),
       leading: state.isDefault() ? EditButton(state) : DoneButton(state),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.add),
-          tooltip: FlutterI18n.translate(context, "appbar.alarms.tooltip"),
+          tooltip: FlutterI18n.translate(context, "appbarAlarmsTooltip"),
           onPressed: onPressed,
         ),
       ],

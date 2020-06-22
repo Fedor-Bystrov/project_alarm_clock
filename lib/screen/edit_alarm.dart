@@ -21,7 +21,7 @@ class EditAlarmScreen extends StatelessWidget {
     return Scaffold(
       appBar: EditAlarmAppBar.newAppBar(
           context: context,
-          title: I18nText("screen.edit_alarm.title"),
+          title: I18nText("screenEditAlarmTitle"),
           onPressed: () async {
             await state.updateAlarm(initial, updated);
             Navigator.pop(context);

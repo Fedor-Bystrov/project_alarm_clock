@@ -13,15 +13,15 @@ class BottomNavBar extends StatelessWidget {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(Icons.access_alarms),
-            title: I18nText("navbar.bottom.access_alarms.title"),
+            title: I18nText("navbarBottomAccessAlarmsTitle"),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.group),
-            title: I18nText("navbar.bottom.groups.title"),
+            title: I18nText("navbarBottomGroupsTitle"),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.settings),
-            title: I18nText("navbar.bottom.settings.title"),
+            title: I18nText("navbarBottomSettingsTitle"),
           ),
         ]);
   }

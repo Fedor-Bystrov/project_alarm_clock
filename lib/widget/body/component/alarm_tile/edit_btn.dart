@@ -16,7 +16,7 @@ class AlarmTileEditBtn extends StatelessWidget {
         shape: CircleBorder(),
       ),
       child: IconButton(
-        tooltip: FlutterI18n.translate(context, "alarm_tile.edit_btn.tooltip"),
+        tooltip: FlutterI18n.translate(context, "alarmTileEditBtnTooltip"),
         icon: Icon(
           Icons.edit,
           color: CommonColors.primaryColor,
