@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/state/alarms_list.dart';
@@ -16,13 +17,13 @@ class AlarmsAppBar {
     var state = Provider.of<AlarmsListState>(context);
     return AppBar(
       centerTitle: true,
-      title: const Text("Alarms"), // TODO translation
+      title: I18nText('appbar.alarms.title'),
       iconTheme: IconThemeData(color: CommonColors.accentColor),
       leading: state.isDefault() ? EditButton(state) : DoneButton(state),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.add),
-          tooltip: "Add new alarm", // TODO translations
+          tooltip: FlutterI18n.translate(context, "appbar.alarms.tooltip"),
           onPressed: onPressed,
         ),
       ],
