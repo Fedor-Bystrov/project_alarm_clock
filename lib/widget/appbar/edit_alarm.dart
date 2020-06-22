@@ -9,7 +9,7 @@ class EditAlarmAppBar {
   static AppBar newAppBar({
     @required BuildContext context,
     @required VoidCallback onPressed,
-    @required Text title,
+    @required Widget title,
   }) {
     return AppBar(
       centerTitle: true,

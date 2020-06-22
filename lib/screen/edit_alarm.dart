@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:projectbudy/model/alarm.dart';
@@ -20,7 +21,7 @@ class EditAlarmScreen extends StatelessWidget {
     return Scaffold(
       appBar: EditAlarmAppBar.newAppBar(
           context: context,
-          title: const Text("Edit Alarm"), // TODO translation
+          title: I18nText("screen.edit_alarm.title"),
           onPressed: () async {
             await state.updateAlarm(initial, updated);
             Navigator.pop(context);
