@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:projectbudy/screen/edit_alarm.dart';
 import 'package:projectbudy/state/alarms_list.dart';
@@ -27,9 +28,14 @@ class Application extends StatelessWidget {
         child: MaterialApp(
           localizationsDelegates: [
             FlutterI18nDelegate(
-              translationLoader: FileTranslationLoader(basePath: 'assets/i18n', useCountryCode: false),
+              translationLoader: FileTranslationLoader(
+                basePath: 'assets/i18n',
+                useCountryCode: false,
+                decodeStrategies: [JsonDecodeStrategy()],
+              ),
               missingTranslationHandler: (key, locale) {
-                print("--- Missing Key: $key, languageCode: ${locale.languageCode}"); // TODO error handling
+                print(
+                    "--- Missing Key: $key, languageCode: ${locale.languageCode}"); // TODO error handling
               },
             ),
             GlobalMaterialLocalizations.delegate,
