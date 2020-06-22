@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projectbudy/state/alarms_list.dart';
 
 import 'package:projectbudy/util/colors.dart';
 
