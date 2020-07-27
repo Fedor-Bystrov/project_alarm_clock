@@ -1,3 +1,3 @@
 # projectbudy
 
-Awesome social alarm
+Alarm clock application blueprint
